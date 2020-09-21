@@ -150,7 +150,7 @@ app.post('/sendMessage/:token', (req, resp) => {
 
 app.get('/sendMessage/:token', (req, resp) => {
     console.log(req.query);
-    console.info(req.params);
+    console.log(req.params.token);
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
             sendResponse(row.chatId, req.query.text, req.query.parse_mode, req.query.reply_markup, req.query.disable_web_page_preview, req.query.photo, req.query.disable_notification, (res) => {
@@ -161,11 +161,11 @@ app.get('/sendMessage/:token', (req, resp) => {
                     }
                 };
                 resp.json(respData)
-            })
+            });
         } else {
             resp.json({
                 result: config.ui.userNotExistHint
-            })
+            });
         }
     })
 });
