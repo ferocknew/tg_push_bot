@@ -27,10 +27,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_page_preview, photo, disable_notification, callback) {
-    parse_mode = parse_mode || ''
-    disable_web_page_preview = disable_web_page_preview || false
-    disable_notification = disable_notification || false
-    let method = 'sendMessage'
+    parse_mode = parse_mode || '';
+    disable_web_page_preview = disable_web_page_preview || false;
+    disable_notification = disable_notification || false;
+    let method = 'sendMessage';
     let postData = {
         chat_id: uid,
         text: text,
@@ -38,16 +38,16 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
         reply_markup: reply_markup,
         disable_web_page_preview: disable_web_page_preview,
         disable_notification: disable_notification
-    }
+    };
     reply_markup = reply_markup || {}
     if (photo) {
         if (photo.startsWith('https')) {
-            postData.photo = photo
-            method = 'sendPhoto'
-            delete postData.text
-            postData.caption = text
+            postData.photo = photo;
+            method = 'sendPhoto';
+            delete postData.text;
+            postData.caption = text;
         } else {
-            postData.text = photo
+            postData.text = photo;
         }
         // postData.caption = text
     }
@@ -56,7 +56,7 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
         },
         (error, response, body) => {
             if (callback) {
-                if (error) callback(error)
+                if (error) callback(error);
                 else callback(response)
             }
         }
@@ -108,13 +108,14 @@ app.post('/inlineQuery', (req, resp) => {
                 sendResponse(uid, util.format(hintText, row.chatToken), 'Markdown', undefined, true)
                 return Promise.reject(1)
             } else {
-                console.log('not exist', uid);
+                console.log('app.post(/inlineQuerynot) ||  exist', uid);
                 return genUserToken(uid)
             }
         }).then(token => {
             sendResponse(uid, util.format(hintText, token), 'Markdown', undefined, true)
         }).catch((error) => {
-            console.log(error)
+            console.log('app.post(/inlineQuerynot) ||');
+            console.log(error);
         })
     } else if (req.body.message.text && req.body.message.text === '/end') {
         let uid = req.body.message.chat.id;
@@ -128,7 +129,7 @@ app.post('/inlineQuery', (req, resp) => {
 });
 
 app.post('/sendMessage/:token', (req, resp) => {
-    console.log(req.body);
+    console.log('app.post(/sendMessage/) ||' + JSON.stringify(req.body));
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
             try {
@@ -142,6 +143,7 @@ app.post('/sendMessage/:token', (req, resp) => {
                     resp.json(respData)
                 });
             } catch (e) {
+                console.log('app.post(/sendMessage/) || error !!');
                 console.log(e);
             }
         } else {
@@ -153,7 +155,7 @@ app.post('/sendMessage/:token', (req, resp) => {
 });
 
 app.get('/sendMessage/:token', (req, resp) => {
-    console.log(req.query);
+    console.log('app.get(/sendMessage/) || ' + JSON.stringify(req.query));
     // console.log(req.params.token);
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
@@ -168,6 +170,7 @@ app.get('/sendMessage/:token', (req, resp) => {
                     resp.json(respData)
                 });
             } catch (e) {
+                console.log('app.get(/sendMessage/) || error !!');
                 console.log(e);
             }
         } else {
@@ -188,7 +191,7 @@ app.get('/redirectTo', (req, resp) => {
 });
 
 app.get('/rulesets/smart/', (req, resp) => {
-    console.log(req.url);
+    console.log('app.get(/rulesets/smart/) || req.url = ' + req.url);
     let confFile = path.join(__dirname, 'potatso.json');
     fs.createReadStream(confFile).pipe(resp);
 });
