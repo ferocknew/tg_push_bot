@@ -131,26 +131,30 @@ app.post('/sendMessage/:token', (req, resp) => {
     console.log(req.body);
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
-            sendResponse(row.chatId, req.body.text, req.body.parse_mode, req.body.reply_markup, req.body.disable_web_page_preview, req.body.photo, req.body.disable_notification, (res) => {
-                let respData = {
-                    result: {
-                        body: res.body,
-                        statusCode: res.statusCode
-                    }
-                }
-                resp.json(respData)
-            })
+            try {
+                sendResponse(row.chatId, req.body.text, req.body.parse_mode, req.body.reply_markup, req.body.disable_web_page_preview, req.body.photo, req.body.disable_notification, (res) => {
+                    let respData = {
+                        result: {
+                            body: res.body,
+                            statusCode: res.statusCode
+                        }
+                    };
+                    resp.json(respData)
+                });
+            } catch (e) {
+                console.log(e);
+            }
         } else {
             resp.json({
                 result: config.ui.userNotExistHint
             })
         }
     })
-})
+});
 
 app.get('/sendMessage/:token', (req, resp) => {
     console.log(req.query);
-    console.log(req.params.token);
+    // console.log(req.params.token);
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
             try {
