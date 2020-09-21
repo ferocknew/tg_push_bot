@@ -1,30 +1,30 @@
-const http = require('http')
-const request = require('request')
-const https = require('https')
-const fs = require('fs')
-const express = require('express')
-const bodyParser = require('body-parser')
-const uniqid = require('uniqid')
-const sqlite3 = require('sqlite3')
-const util = require('util')
-const config = require('./config')
-const path = require('path')
+const http = require('http');
+const request = require('request');
+const https = require('https');
+const fs = require('fs');
+const express = require('express');
+const bodyParser = require('body-parser');
+const uniqid = require('uniqid');
+const sqlite3 = require('sqlite3');
+const util = require('util');
+const config = require('./config');
+const path = require('path');
 
-const privateKey = fs.readFileSync(config.https.privateKey, 'utf8')
-const certificate = fs.readFileSync(config.https.certificate, 'utf8')
+const privateKey = fs.readFileSync(config.https.privateKey, 'utf8');
+const certificate = fs.readFileSync(config.https.certificate, 'utf8');
 
-const app = express()
-const db = new sqlite3.Database('bot.db')
+const app = express();
+const db = new sqlite3.Database('bot.db');
 
-app.use(express.static('static'))
+app.use(express.static('static'));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: false
-}))
+}));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_page_preview, photo, disable_notification, callback) {
     parse_mode = parse_mode || ''
@@ -73,7 +73,7 @@ let getUserToken = function (uid) {
             }
         })
     })
-}
+};
 
 let genUserToken = function (chatId) {
     return new Promise((resolve, reject) => {
@@ -147,7 +147,7 @@ app.post('/sendMessage/:token', (req, resp) => {
 })
 
 app.get('/sendMessage/:token', (req, resp) => {
-    console.log(req);
+    console.log(req.query);
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
             sendResponse(row.chatId, req.query.text, req.query.parse_mode, req.query.reply_markup, req.query.disable_web_page_preview, req.query.photo, req.query.disable_notification, (res) => {
@@ -156,7 +156,7 @@ app.get('/sendMessage/:token', (req, resp) => {
                         body: res.body,
                         statusCode: res.statusCode
                     }
-                }
+                };
                 resp.json(respData)
             })
         } else {
@@ -174,20 +174,20 @@ app.get('/', (req, resp) => {
 
 app.get('/redirectTo', (req, resp) => {
     resp.redirect(req.query.url)
-})
+});
 
 app.get('/rulesets/smart/', (req, resp) => {
     console.log(req.url);
     let confFile = path.join(__dirname, 'potatso.json');
     fs.createReadStream(confFile).pipe(resp);
-})
+});
 
 app.post('/rulesets/update/', (req, resp) => {
     resp.json({
         "status": 0,
         "data": []
     })
-})
+});
 
 const httpsServer = https.createServer({
     key: privateKey,
