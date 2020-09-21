@@ -64,6 +64,7 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
 }
 
 let getUserToken = function (uid) {
+    console.info(`getUserToken || uid = ${uid}`);
     return new Promise((resolve, reject) => {
         db.get('SELECT * FROM users WHERE chatId = ?', [uid], (error, row) => {
             if (error) {
@@ -71,13 +72,14 @@ let getUserToken = function (uid) {
             } else {
                 resolve(row)
             }
-        })
+        });
     })
 };
 
 let genUserToken = function (chatId) {
+    console.info(`genUserToken || chatId = ${chatId}`);
     return new Promise((resolve, reject) => {
-        let token = uniqid()
+        let token = uniqid();
         db.run('INSERT INTO users VALUES(?, ?)', [chatId, token], error => {
             if (error) {
                 reject(error)
@@ -86,7 +88,7 @@ let genUserToken = function (chatId) {
             }
         })
     })
-}
+};
 
 let removeUid = function (uid) {
     return new Promise((resolve, reject) => {
@@ -95,18 +97,18 @@ let removeUid = function (uid) {
             else resolve()
         })
     })
-}
+};
 
 app.post('/inlineQuery', (req, resp) => {
     if (req.body.message.text && req.body.message.text === '/start') {
-        let uid = req.body.message.chat.id
-        let hintText = config.ui.startHint
+        let uid = req.body.message.chat.id;
+        let hintText = config.ui.startHint;
         getUserToken(uid).then(row => {
             if (row) {
                 sendResponse(uid, util.format(hintText, row.chatToken), 'Markdown', undefined, true)
                 return Promise.reject(1)
             } else {
-                console.log('not exist', uid)
+                console.log('not exist', uid);
                 return genUserToken(uid)
             }
         }).then(token => {
@@ -115,15 +117,15 @@ app.post('/inlineQuery', (req, resp) => {
             console.log(error)
         })
     } else if (req.body.message.text && req.body.message.text === '/end') {
-        let uid = req.body.message.chat.id
+        let uid = req.body.message.chat.id;
         removeUid(uid).then(() => {
             sendResponse(uid, config.ui.stopHint)
         }).catch(() => {
             sendResponse(uid, config.ui.errorHint)
         })
     }
-    resp.send('hello')
-})
+    resp.send('hello');
+});
 
 app.post('/sendMessage/:token', (req, resp) => {
     console.log(req.body)
