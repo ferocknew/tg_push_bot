@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_page_preview, photo, disable_notification, callback) {
     parse_mode = parse_mode || ''
     disable_web_page_preview = disable_web_page_preview || false
-	disable_notification = disable_notification || false
+    disable_notification = disable_notification || false
     let method = 'sendMessage'
     let postData = {
         chat_id: uid,
@@ -37,33 +37,33 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
         parse_mode: parse_mode,
         reply_markup: reply_markup,
         disable_web_page_preview: disable_web_page_preview,
-		disable_notification: disable_notification
+        disable_notification: disable_notification
     }
     reply_markup = reply_markup || {}
     if (photo) {
-		if (photo.startsWith('https')) {
-			postData.photo = photo
-			method = 'sendPhoto'
-			delete postData.text
-			postData.caption = text
-		} else {
-			postData.text = photo
-		}
+        if (photo.startsWith('https')) {
+            postData.photo = photo
+            method = 'sendPhoto'
+            delete postData.text
+            postData.caption = text
+        } else {
+            postData.text = photo
+        }
         // postData.caption = text
     }
     request.post(config.bot.token + method, {
             json: postData
         },
         (error, response, body) => {
-			if (callback) {
-            	if (error) callback(error)
-            	else callback(response)
-			}
+            if (callback) {
+                if (error) callback(error)
+                else callback(response)
+            }
         }
     )
 }
 
-let getUserToken = function(uid) {
+let getUserToken = function (uid) {
     return new Promise((resolve, reject) => {
         db.get('SELECT * FROM users WHERE chatId = ?', [uid], (error, row) => {
             if (error) {
@@ -75,7 +75,7 @@ let getUserToken = function(uid) {
     })
 }
 
-let genUserToken = function(chatId) {
+let genUserToken = function (chatId) {
     return new Promise((resolve, reject) => {
         let token = uniqid()
         db.run('INSERT INTO users VALUES(?, ?)', [chatId, token], error => {
@@ -88,7 +88,7 @@ let genUserToken = function(chatId) {
     })
 }
 
-let removeUid = function(uid) {
+let removeUid = function (uid) {
     return new Promise((resolve, reject) => {
         db.run('DELETE FROM users WHERE chatId = ?', [uid], error => {
             if (error) reject(error)
@@ -100,7 +100,7 @@ let removeUid = function(uid) {
 app.post('/inlineQuery', (req, resp) => {
     if (req.body.message.text && req.body.message.text === '/start') {
         let uid = req.body.message.chat.id
-		let hintText = config.ui.startHint
+        let hintText = config.ui.startHint
         getUserToken(uid).then(row => {
             if (row) {
                 sendResponse(uid, util.format(hintText, row.chatToken), 'Markdown', undefined, true)
@@ -132,30 +132,30 @@ app.post('/sendMessage/:token', (req, resp) => {
             sendResponse(row.chatId, req.body.text, req.body.parse_mode, req.body.reply_markup, req.body.disable_web_page_preview, req.body.photo, req.body.disable_notification, (res) => {
                 let respData = {
                     result: {
-						body: res.body,
-						statusCode: res.statusCode
-					}
+                        body: res.body,
+                        statusCode: res.statusCode
+                    }
                 }
                 resp.json(respData)
             })
         } else {
             resp.json({
-				result: config.ui.userNotExistHint
+                result: config.ui.userNotExistHint
             })
         }
     })
 })
 
 app.get('/sendMessage/:token', (req, resp) => {
-    console.log(req.query.parse_mode)
+    console.log(req);
     db.get('SELECT * FROM users WHERE chatToken = ?', [req.params.token], (error, row) => {
         if (!error) {
             sendResponse(row.chatId, req.query.text, req.query.parse_mode, req.query.reply_markup, req.query.disable_web_page_preview, req.query.photo, req.query.disable_notification, (res) => {
                 let respData = {
                     result: {
-						body: res.body,
-						statusCode: res.statusCode
-					}
+                        body: res.body,
+                        statusCode: res.statusCode
+                    }
                 }
                 resp.json(respData)
             })
@@ -173,20 +173,20 @@ app.get('/', (req, resp) => {
 })
 
 app.get('/redirectTo', (req, resp) => {
-	resp.redirect(req.query.url)
+    resp.redirect(req.query.url)
 })
 
 app.get('/rulesets/smart/', (req, resp) => {
-	console.log(req.url);
-	let confFile = path.join(__dirname, 'potatso.json');
+    console.log(req.url);
+    let confFile = path.join(__dirname, 'potatso.json');
     fs.createReadStream(confFile).pipe(resp);
 })
 
 app.post('/rulesets/update/', (req, resp) => {
-	resp.json({
-		"status": 0,
-		"data": []
-	})
+    resp.json({
+        "status": 0,
+        "data": []
+    })
 })
 
 const httpsServer = https.createServer({
