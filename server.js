@@ -165,7 +165,7 @@ app.get('/sendMessage/:token', (req, resp) => {
             })
         }
     })
-})
+});
 
 app.get('/', (req, resp) => {
     console.log(req.url)
@@ -192,8 +192,8 @@ app.post('/rulesets/update/', (req, resp) => {
 const httpsServer = https.createServer({
     key: privateKey,
     cert: certificate
-}, app)
+}, app);
 
-httpsServer.listen(443, config.https.domain, () => {
-    console.log('listening on port 443')
-})
+httpsServer.listen(8443, config.https.domain, () => {
+    console.log('listening on port 8443')
+});
