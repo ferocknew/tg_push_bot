@@ -5,6 +5,7 @@ const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const uniqid = require('uniqid');
 const sqlite3 = require('sqlite3');
 const util = require('util');
@@ -116,7 +117,11 @@ async function getTgPhoto(tgMessage) {
     let filePath = jsonData['result']['file_path'];
 
     url = `https://api.telegram.org/file/bot${token}/${filePath}`;
-    console.log(url);
+    let fileName = uniqid();
+    let extname = path.extname(filePath);
+    let saveFilePath = `/tmp/${fileName}`;
+
+    console.log(extname);
 }
 
 app.post('/inlineQuery', (req, resp) => {
