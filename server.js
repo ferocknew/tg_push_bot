@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_page_preview, photo, disable_notification, callback) {
-    parse_mode = parse_mode || '';
+    parse_mode = parse_mode || 'Markdown';
     disable_web_page_preview = disable_web_page_preview || false;
     disable_notification = disable_notification || false;
     let method = 'sendMessage';
