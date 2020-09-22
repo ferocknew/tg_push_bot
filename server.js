@@ -1,4 +1,5 @@
 const http = require('http');
+const fetch = require('node-fetch');
 const request = require('request');
 const https = require('https');
 const fs = require('fs');
@@ -104,10 +105,28 @@ let removeUid = function (uid) {
     })
 };
 
+async function getTgPhoto(tgMessage) {
+    let photoInfo = tgMessage.photo;
+    let fileId = photoInfo[0].file_id;
+    let token = config.bot.token;
+    let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
+    let res = await fetch(url, {});
+    let jsonData = await res.json();
+    console.log(jsonData);
+
+}
+
 app.post('/inlineQuery', (req, resp) => {
     console.info(`/inlineQuery || req.body = ` + JSON.stringify(req.body));
     if (req.body.hasOwnProperty('message')) {
         let uid = req.body.message.chat.id;
+        let tgMessage = req.body.message;
+        if (tgMessage.hasOwnProperty('photo')) {
+            getTgPhoto(tgMessage);
+            resp.send('');
+            return;
+        }
+
         switch (req.body.message.text) {
             case "/start":
                 let hintText = config.ui.startHint;
