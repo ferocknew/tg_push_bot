@@ -160,6 +160,27 @@ app.post('/sendMessage/:token', (req, resp) => {
     resp.send('');
 });
 
+app.get('/test', (req, resp) => {
+    let chatId = '-1001234170897';
+    try {
+        sendResponse(chatId, req.query.text, req.query.parse_mode, req.query.reply_markup, req.query.disable_web_page_preview, req.query.photo, req.query.disable_notification, (res) => {
+            let respData = {
+                result: {
+                    body: res.body,
+                    statusCode: res.statusCode
+                }
+            };
+            resp.json(respData);
+
+            resp.send(JSON.stringify(res));
+        });
+    } catch (e) {
+        console.log('app.get(/test/) || error !!');
+        console.log(e);
+        resp.send('');
+    }
+});
+
 app.get('/sendMessage/:token', (req, resp) => {
     console.log('app.get(/sendMessage/) || ' + JSON.stringify(req.query));
     // console.log(req.params.token);
