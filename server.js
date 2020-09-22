@@ -104,6 +104,7 @@ let removeUid = function (uid) {
 };
 
 app.post('/inlineQuery', (req, resp) => {
+    console.info(`/inlineQuery || req.body = ` + JSON.stringify(req.body));
     if (req.body.message.text && req.body.message.text === '/start') {
         let uid = req.body.message.chat.id;
         let hintText = config.ui.startHint;
@@ -189,7 +190,7 @@ app.get('/sendMessage/:token', (req, resp) => {
 
 app.get('/', (req, resp) => {
     console.log(req.url);
-    console.log(req);
+    // console.log(req);
     resp.send(config.ui.httpsTestHint);
 });
 
