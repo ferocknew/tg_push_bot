@@ -114,7 +114,8 @@ let removeUid = function (uid) {
 
 async function getTgPhoto(tgMessage) {
     let photoInfo = tgMessage.photo;
-    let fileId = photoInfo[0].file_id;
+    let chatId = tgMessage.chat.id;
+    let fileId = photoInfo[2].file_id;
     let token = config.ui.token;
     let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
     // console.log(url);
@@ -132,7 +133,8 @@ async function getTgPhoto(tgMessage) {
         const data = fs.readFileSync(saveFilePath);
         ipfs.add(data, (err, files) => {
             let hash = files[0].hash;
-            console.info(`https://ipfs.n.6do.me:8088/ipfs/${hash}?0${extname}`);
+            let sendText = `https://ipfs.n.6do.me:8088/ipfs/${hash}?0${extname}`;
+            sendResponse(chatId, sendText);
         });
     });
 
