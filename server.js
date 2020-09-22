@@ -169,7 +169,7 @@ app.post('/sendMessage/:token', (req, resp) => {
             })
         }
     });
-    resp.send('');
+    // resp.send('');
 });
 
 app.get('/test', (req, resp) => {
