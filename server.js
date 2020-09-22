@@ -206,7 +206,8 @@ app.get('/sendMessage/:token', (req, resp) => {
                             statusCode: res.statusCode
                         }
                     };
-                    resp.json(respData)
+                    console.log('app.get(/sendMessage/) || respData = ' + JSON.stringify(respData));
+                    resp.json(respData);
                 });
             } catch (e) {
                 console.log('app.get(/sendMessage/) || error !!');
