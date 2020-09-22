@@ -52,7 +52,7 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
         // postData.caption = text
     }
     console.info(`sendResponse || method = ${method}`);
-    console.info(`sendResponse || postData = ` + JSON.stringify(postData));
+    // console.info(`sendResponse || postData = ` + JSON.stringify(postData));
     request.post(config.bot.token + method, {
             json: postData
         },
@@ -155,7 +155,8 @@ app.post('/sendMessage/:token', (req, resp) => {
                 result: config.ui.userNotExistHint
             })
         }
-    })
+    });
+    resp.send('');
 });
 
 app.get('/sendMessage/:token', (req, resp) => {
@@ -182,7 +183,8 @@ app.get('/sendMessage/:token', (req, resp) => {
                 result: config.ui.userNotExistHint
             });
         }
-    })
+    });
+    resp.send('');
 });
 
 app.get('/', (req, resp) => {
