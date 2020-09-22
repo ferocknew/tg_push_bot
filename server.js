@@ -10,6 +10,13 @@ const sqlite3 = require('sqlite3');
 const util = require('util');
 const config = require('./config');
 const path = require('path');
+const ipfsAPI = require('ipfs-api');
+
+const ipfs = ipfsAPI({
+    host: '127.0.0.1',
+    port: 5001,
+    protocol: 'http'
+});
 
 const privateKey = fs.readFileSync(config.https.privateKey, 'utf8');
 const certificate = fs.readFileSync(config.https.certificate, 'utf8');
@@ -122,7 +129,16 @@ async function getTgPhoto(tgMessage) {
     const req = request.get(url);
     req.pipe(fs.createWriteStream(saveFilePath));
 
-    console.log(extname);
+    req.on("finish", function () {
+        console.log("文件写入成功");
+        const data = fs.readFileSync(saveFilePath);
+        ipfs.add(data, (err, files) => {
+            let hash = files[0].hash
+            console.info(`https://ipfs.n.6do.me:8088/ipfs/${hash}`);
+        });
+    });
+
+    console.log(saveFilePath);
 }
 
 app.post('/inlineQuery', (req, resp) => {
