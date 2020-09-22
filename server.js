@@ -188,9 +188,10 @@ app.get('/sendMessage/:token', (req, resp) => {
 });
 
 app.get('/', (req, resp) => {
-    console.log(req.url)
+    console.log(req.url);
+    console.log(req);
     resp.send(config.ui.httpsTestHint);
-})
+});
 
 app.get('/redirectTo', (req, resp) => {
     resp.redirect(req.query.url)
