@@ -5,7 +5,6 @@ const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const uniqid = require('uniqid');
 const sqlite3 = require('sqlite3');
 const util = require('util');
