@@ -118,7 +118,9 @@ async function getTgPhoto(tgMessage) {
     url = `https://api.telegram.org/file/bot${token}/${filePath}`;
     let fileName = uniqid();
     let extname = path.extname(filePath);
-    let saveFilePath = `/tmp/${fileName}`;
+    let saveFilePath = `/tmp/${fileName}${extname}`;
+    const req = request.get(url);
+    req.pipe(fs.createWriteStream(saveFilePath));
 
     console.log(extname);
 }
