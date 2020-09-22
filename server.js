@@ -106,7 +106,7 @@ let removeUid = function (uid) {
 
 app.post('/inlineQuery', (req, resp) => {
     console.info(`/inlineQuery || req.body = ` + JSON.stringify(req.body));
-    if (req.body.message.text) {
+    if (!Object.is(req.body.message.text, undefined)) {
         let uid = req.body.message.chat.id;
         switch (req.body.message.text) {
             case "/start":
