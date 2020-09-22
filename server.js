@@ -219,7 +219,7 @@ app.get('/sendMessage/:token', (req, resp) => {
             });
         }
     });
-    resp.send('');
+    // resp.send('');
 });
 
 app.get('/', (req, resp) => {
