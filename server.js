@@ -51,6 +51,8 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
         }
         // postData.caption = text
     }
+    console.info(`sendResponse || method = ${method}`);
+    console.info(`sendResponse || postData = ` + JSON.stringify(postData));
     request.post(config.bot.token + method, {
             json: postData
         },
