@@ -127,9 +127,7 @@ async function getTgPhoto(tgMessage) {
     let extname = path.extname(filePath);
     let saveFilePath = `/tmp/${fileName}${extname}`;
     const req = request.get(url);
-    req.pipe(fs.createWriteStream(saveFilePath));
-
-    req.on("finish", function () {
+    req.pipe(fs.createWriteStream(saveFilePath)).on('close', () => {
         console.log("文件写入成功");
         const data = fs.readFileSync(saveFilePath);
         ipfs.add(data, (err, files) => {
