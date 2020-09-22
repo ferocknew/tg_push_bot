@@ -110,11 +110,13 @@ async function getTgPhoto(tgMessage) {
     let fileId = photoInfo[0].file_id;
     let token = config.ui.token;
     let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
-    console.log(url);
+    // console.log(url);
     let res = await fetch(url, {});
     let jsonData = await res.json();
-    console.log(jsonData);
+    let filePath = jsonData['result']['file_path'];
 
+    url = `https://api.telegram.org/file/bot${token}/${filePath}`;
+    console.log(url);
 }
 
 app.post('/inlineQuery', (req, resp) => {
