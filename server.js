@@ -106,32 +106,43 @@ let removeUid = function (uid) {
 
 app.post('/inlineQuery', (req, resp) => {
     console.info(`/inlineQuery || req.body = ` + JSON.stringify(req.body));
-    if (req.body.message.text && req.body.message.text === '/start') {
+    if (req.body.message.text) {
         let uid = req.body.message.chat.id;
-        let hintText = config.ui.startHint;
-        getUserToken(uid).then(row => {
-            if (row) {
-                sendResponse(uid, util.format(hintText, row.chatToken), 'Markdown', undefined, true)
-                return Promise.reject(1)
-            } else {
-                console.log('app.post(/inlineQuerynot) ||  exist', uid);
-                return genUserToken(uid)
-            }
-        }).then(token => {
-            sendResponse(uid, util.format(hintText, token), 'Markdown', undefined, true)
-        }).catch((error) => {
-            console.log('app.post(/inlineQuerynot) ||');
-            console.log(error);
-        })
-    } else if (req.body.message.text && req.body.message.text === '/end') {
-        let uid = req.body.message.chat.id;
-        removeUid(uid).then(() => {
-            sendResponse(uid, config.ui.stopHint)
-        }).catch(() => {
-            sendResponse(uid, config.ui.errorHint)
-        })
+        switch (req.body.message.text) {
+            case "/start":
+                let hintText = config.ui.startHint;
+                getUserToken(uid).then(row => {
+                    if (row) {
+                        sendResponse(uid, util.format(hintText, row.chatToken), 'Markdown', undefined, true)
+                        return Promise.reject(1)
+                    } else {
+                        console.log('app.post(/inlineQuerynot) ||  exist', uid);
+                        return genUserToken(uid)
+                    }
+                }).then(token => {
+                    sendResponse(uid, util.format(hintText, token), 'Markdown', undefined, true)
+                }).catch((error) => {
+                    console.log('app.post(/inlineQuerynot) ||');
+                    console.log(error);
+                });
+                break;
+            case "/end":
+                removeUid(uid).then(() => {
+                    sendResponse(uid, config.ui.stopHint)
+                }).catch(() => {
+                    sendResponse(uid, config.ui.errorHint)
+                });
+                break;
+
+        }
     }
-    resp.send('hello');
+    // if (req.body.message.text && req.body.message.text === '/start') {
+    //
+    // } else if (req.body.message.text && req.body.message.text === '/end') {
+    //
+    // }
+    // resp.send('hello');
+    resp.send('');
 });
 
 app.post('/sendMessage/:token', (req, resp) => {
