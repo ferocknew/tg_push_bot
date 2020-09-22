@@ -39,7 +39,7 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
         disable_web_page_preview: disable_web_page_preview,
         disable_notification: disable_notification
     };
-    reply_markup = reply_markup || {}
+    reply_markup = reply_markup || {};
     if (photo) {
         if (photo.startsWith('https')) {
             postData.photo = photo;
@@ -173,7 +173,7 @@ app.get('/test', (req, resp) => {
             };
             resp.json(respData);
 
-            resp.send(JSON.stringify(res));
+            // resp.send(JSON.stringify(res));
         });
     } catch (e) {
         console.log('app.get(/test/) || error !!');
