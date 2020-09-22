@@ -61,6 +61,7 @@ async function sendResponse(uid, text, parse_mode, reply_markup, disable_web_pag
                 if (error) callback(error);
                 else {
                     console.info("request.post || response = " + JSON.stringify(response));
+                    callback(response);
                 }
             }
         }
