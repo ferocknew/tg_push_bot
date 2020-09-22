@@ -131,8 +131,8 @@ async function getTgPhoto(tgMessage) {
         console.log("文件写入成功");
         const data = fs.readFileSync(saveFilePath);
         ipfs.add(data, (err, files) => {
-            let hash = files[0].hash
-            console.info(`https://ipfs.n.6do.me:8088/ipfs/${hash}`);
+            let hash = files[0].hash;
+            console.info(`https://ipfs.n.6do.me:8088/ipfs/${hash}?0${extname}`);
         });
     });
 
