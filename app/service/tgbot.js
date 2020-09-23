@@ -1,6 +1,7 @@
 'use strict'
 const TelegramBot = require('node-telegram-bot-api');
 const Service = require('egg').Service;
+const uniqid = require('uniqid');
 
 class TgbotService extends Service {
     constructor(ctx) {
