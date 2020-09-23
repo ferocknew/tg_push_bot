@@ -25,6 +25,11 @@ class HomeController extends Controller {
         return;
     }
 
+    async test() {
+        const {ctx, app} = this;
+        ctx.body = '';
+        return;
+    }
 
     // mysql的crud
     async sql() {
