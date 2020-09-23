@@ -46,7 +46,7 @@ class TgbotService extends Service {
         } else {
             chatToken = res['chatToken'];
         }
-        this.bot.sendMessage(this.chatId, `${startMsg} ${chatToken}`);
+        this.sendMessage(this.chatId, `${startMsg} ${chatToken}`);
         return true;
     }
 
@@ -57,6 +57,16 @@ class TgbotService extends Service {
         if (res) chatId = res['chatId'];
 
         return chatId;
+    }
+
+    async sendMessage(chatId, text) {
+        const {ctx, app} = this;
+
+        chatId = this.chatId || chatId;
+        let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
+
+        this.bot.sendMessage(chatId, text);
+        return true;
     }
 }
 

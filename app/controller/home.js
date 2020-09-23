@@ -43,6 +43,8 @@ class HomeController extends Controller {
         let chatId = await ctx.service.tgbot.getChatId(token);
         if (!chatId) ctx.body = '';
 
+        await ctx.service.tgbot.sendMessage(chatId, text);
+
         ctx.body = '';
         return;
     }
