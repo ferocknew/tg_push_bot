@@ -15,12 +15,12 @@ class HomeController extends Controller {
         let q = ctx.query;
         let b = ctx.request.body;
         let messageObj = b.message || null;
+        ctx.logger.info('HomeController.inlineQuery || b = %j', b);
         let entities = messageObj.entities || null;
-        ctx.logger.info('HomeController.inlineQuery || messageObj = %j', messageObj);
 
         // 处理bot 命令
         if (!Object.is(entities, null)) {
-            await ctx.service.tgbot.command(messageObj.text.substr(1));
+            await ctx.service.tgbot.command(messageObj.text.substr(1), messageObj);
             ctx.body = '';
             return;
         }

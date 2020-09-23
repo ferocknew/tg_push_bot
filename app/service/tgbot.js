@@ -1,17 +1,17 @@
 const Service = require('egg').Service;
 
 class TgbotService extends Service {
-    async command(commandText) {
+    async command(commandText, messageObj) {
         const {ctx, app} = this;
         ctx.logger.info('TgbotService.command || commandText = %j', commandText);
 
         if (typeof (this[commandText]) != 'function') return false;
-        await this[commandText]();
+        await this[commandText](messageObj);
     }
 
-    async start() {
+    async start(messageObj) {
         const {ctx, app} = this;
-        ctx.logger.info('TgbotService.start || init');
+        ctx.logger.info('TgbotService.start || messageObj = %j', messageObj);
 
     }
 }
