@@ -41,9 +41,12 @@ class HomeController extends Controller {
 
     async test() {
         const {ctx, app} = this;
+        let q = ctx.query;
+        ctx.logger.info('HomeController.sendMessage || q = %j', q);
+        //
+        let a = q.a;
+        await ctx.service.tgbot.command(a);
         ctx.body = '';
-        let configBot = app.config.bot;
-        ctx.logger.info('HomeController.test || configBot = %j', configBot);
         return;
     }
 
