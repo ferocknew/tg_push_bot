@@ -65,7 +65,7 @@ class TgbotService extends Service {
         chatId = this.chatId || chatId;
         let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
 
-        this.bot.sendMessage(chatId, text);
+        bot.sendMessage(chatId, text);
         return true;
     }
 }
