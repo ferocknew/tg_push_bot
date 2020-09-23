@@ -67,6 +67,22 @@ class HomeController extends Controller {
         let token = p['token'] || null;
         let photo = q['photo'] || b['photo'] || null;
 
+        if (!token || !photo) {
+            ctx.body = '';
+            return;
+        }
+
+
+        let chatId = await ctx.service.tgbot.getChatId(token);
+        if (!chatId) {
+            ctx.body = '';
+            return;
+        }
+
+        let res = await ctx.service.tgbot.sendPhoto(chatId, photo);
+        ctx.body = res;
+        return;
+
     }
 
     async test() {
