@@ -14,8 +14,10 @@ class HomeController extends Controller {
 
         let p = ctx.params;
         let q = ctx.query;
+        let b = ctx.body;
         ctx.logger.info('HomeController.inlineQuery || p = %j', p);
         ctx.logger.info('HomeController.inlineQuery || q = %j', q);
+        ctx.logger.info('HomeController.inlineQuery || b = %j', b);
 
         ctx.body = '';
         return;
