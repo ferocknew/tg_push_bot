@@ -32,12 +32,13 @@ class HomeController extends Controller {
         const {ctx, app} = this;
         let p = ctx.params;
         let q = ctx.query;
+        let b = ctx.request.body;
 
         ctx.logger.info('HomeController.sendMessage || p = %j', p);
         ctx.logger.info('HomeController.sendMessage || q = %j', q);
 
         let token = p['token'] || null;
-        let text = q['text'] || null;
+        let text = q['text'] || b['text'] || null;
         if (!token || !text) {
             ctx.body = '';
             return;
