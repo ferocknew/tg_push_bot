@@ -1,27 +1,63 @@
 # Telegram Push Notifications Bot Update Log
 TG推送机器人更新日志
 
-[点我添加Bot](https://t.me/notificationme_bot) 
-
 [在VPS/ECS上搭建Bot Server](SETUP.md)
-
-[Chrome插件](https://github.com/Fndroid/tg_notification_chrome)
 
 ### 推送消息
 
-
-[Nodejs及Python示例](https://github.com/Fndroid/tg_push_bot/tree/master/examples)
-
 ```
 // using get
-curl -X GET https://tgbot.lbyczf.com/sendMessage/:Token?text=HelloWorld
+curl -X GET https://tgbot.lbyczf.com/sendMessage/:Token/?text=HelloWorld
 
 // using post
-curl -d "text=Helloworld&photo=https%3A%2F%2Fgithub.com%2FFndroid%2Ftg_push_bot%2Fblob%2Fmaster%2Fimgs%2Fphoto_2018-04-21_15-29-55.jpg%3Fraw%3Dtrue" -X POST https://tgbot.lbyczf.com/sendMessage/:Token
+curl -d "text=Helloworld&photo=https%3A%2F%2Fgithub.com%2FFndroid%2Ftg_push_bot%2Fblob%2Fmaster%2Fimgs%2Fphoto_2018-04-21_15-29-55.jpg%3Fraw%3Dtrue" -X POST https://tgbot.lbyczf.com/sendMessage/:Token/
 ```
 
 
 > GET调用的URL长度会有限制，所以如果要发送图片或者发送内容较长，请使用POST
+
+### 配置
+
+- config/config.local.js
+```javascript
+exports.mysql = {
+    // 单数据库信息配置
+    client: {
+        // host
+        host: '127.0.0.1',
+        // 端口号
+        port: '3306',
+        // 用户名
+        user: '',
+        // 密码
+        password: '',
+        // 数据库名
+        database: '',
+    },
+    // 是否加载到 app 上，默认开启
+    app: true,
+    // 是否加载到 agent 上，默认关闭
+    agent: false,
+};
+
+exports.bot = {
+    token: "bot token",
+    ui: {
+        startMsg: "start 显示的信息"
+    }
+};
+```
+
+- 建表ddl（mysql）
+
+```sql
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `chatId` int(10) unsigned NOT NULL DEFAULT '0',
+  `chatToken` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+```
 
 ### 字段解释
 
