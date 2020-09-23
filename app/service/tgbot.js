@@ -22,7 +22,7 @@ class TgbotService extends Service {
         if (typeof (this[commandText]) != 'function') return false;
 
         let token = app.config.bot.token;
-        ctx.logger.info('TgbotService.command || token = %j', token);
+        // ctx.logger.info('TgbotService.command || token = %j', token);
 
         this.bot = new TelegramBot(token, {polling: false});
         let chatObj = messageObj['chat'] || {"id": 117166873};
@@ -38,7 +38,7 @@ class TgbotService extends Service {
         let chatId = this.chatId;
         let res = await app.mysql.get("users", {chatId});
         let chatToken = '';
-        ctx.logger.info('TgbotService.start || res = %j', res);
+        // ctx.logger.info('TgbotService.start || res = %j', res);
         if (!res) {
             // 新建聊天关系
             chatToken = uniqid();
@@ -48,6 +48,15 @@ class TgbotService extends Service {
         }
         this.bot.sendMessage(this.chatId, `${startMsg} ${chatToken}`);
         return true;
+    }
+
+    async getChatId(chatToken) {
+        let chatId = null;
+        const {ctx, app} = this;
+        let res = await app.mysql.get("users", {chatToken});
+        if (res) chatId = res['chatId'];
+
+        return chatId;
     }
 }
 
