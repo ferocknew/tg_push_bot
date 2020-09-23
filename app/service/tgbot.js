@@ -71,10 +71,29 @@ class TgbotService extends Service {
             ctx.logger.warn(error.code);  // => 'ETELEGRAM'
             ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
 
-            return false;
+            return error.response.body;
         });
         ctx.logger.info('TgbotService.sendMessage || res = %j', res);
         return res;
+    }
+
+    async sendPhoto(chatId, photo) {
+        const {ctx, app} = this;
+
+        chatId = this.chatId || chatId;
+        let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
+        photo = encodeURI(photo);
+
+        let res = await bot.sendPhoto(chatId, photo).catch((error) => {
+            ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
+            ctx.logger.warn(error.code);  // => 'ETELEGRAM'
+            ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
+
+            return error.response.body;
+        });
+        ctx.logger.info('TgbotService.sendMessage || res = %j', res);
+        return res;
+
     }
 }
 
