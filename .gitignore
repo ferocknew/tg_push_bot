@@ -9,4 +9,5 @@ run/*
 
 
 config/config.dev.js
+config/config.local.js
 config/config.default.js
