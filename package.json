@@ -1,22 +1,28 @@
 {
-  "name": "nodejs",
+  "name": "tg-bot",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "egg-bin dev"
   },
   "author": "Fndroid",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "egg": "^2.28.0",
+    "egg-mysql": "^3.0.0",
     "express": "^4.16.3",
+    "ipfs-api": "^26.1.2",
+    "node-fetch": "^2.6.1",
     "pm2": "^2.10.2",
     "request": "^2.85.0",
     "sqlite3": "^4.0.0",
-    "node-fetch": "^2.6.1",
-    "ipfs-api": "^26.1.2",
     "uniqid": "^4.1.1"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.15.0"
   }
 }

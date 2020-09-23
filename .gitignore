@@ -5,3 +5,8 @@ node_modules
 *.crt
 *.key
 *.db
+run/*
+
+
+config/config.dev.js
+config/config.default.js
