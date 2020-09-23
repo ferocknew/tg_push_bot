@@ -9,6 +9,7 @@ class TgbotService extends Service {
 
     async start() {
         const {ctx, app} = this;
+        ctx.logger.info('TgbotService.start || init');
     }
 }
 
