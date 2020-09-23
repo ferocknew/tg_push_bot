@@ -64,13 +64,14 @@ class TgbotService extends Service {
 
         chatId = this.chatId || chatId;
         let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
-        try {
-            text = encodeURI(text);
-            let res = await bot.sendMessage(chatId, text, {parse_mode: "Markdown"});
-            ctx.logger.info('TgbotService.sendMessage || res = %j', res);
-        } catch (e) {
-            ctx.logger.warn('TgbotService.sendMessage || e = %j', e);
-        }
+        text = encodeURI(text);
+        let res = await bot.sendMessage(chatId, text, {parse_mode: "Markdown"}).catch((error) => {
+            ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
+            ctx.logger.warn(error.code);  // => 'ETELEGRAM'
+            ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
+        });
+        ctx.logger.info('TgbotService.sendMessage || res = %j', res);
+
         return true;
     }
 }
