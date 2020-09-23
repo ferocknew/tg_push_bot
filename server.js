@@ -131,7 +131,7 @@ async function getTgPhoto(tgMessage) {
     let fileName = uniqid();
     let extname = path.extname(filePath);
     let saveDirPath = `/tmp/${fileName}_1/`;
-    let saveFilePath = `/tmp/${saveDirPath}/${fileName}${extname}`;
+    let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
     if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
 
