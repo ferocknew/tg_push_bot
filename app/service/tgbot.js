@@ -64,8 +64,11 @@ class TgbotService extends Service {
 
         chatId = this.chatId || chatId;
         let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
-
-        bot.sendMessage(chatId, text, {parse_mode: "Markdown"});
+        try {
+            let res = await bot.sendMessage(chatId, text, {parse_mode: "Markdown"});
+        } catch (e) {
+            ctx.logger.warn('TgbotService.sendMessage || e = %j', e);
+        }
         return true;
     }
 }
