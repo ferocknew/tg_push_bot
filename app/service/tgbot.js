@@ -14,6 +14,7 @@ class TgbotService extends Service {
     }
 
     async command(commandText, messageObj) {
+        if (!messageObj) messageObj = {};
         const {ctx, app} = this;
         ctx.logger.info('TgbotService.command || commandText = %j', commandText);
 
