@@ -12,11 +12,15 @@ const config = require('./config');
 const path = require('path');
 const ipfsAPI = require('ipfs-api');
 
-const ipfs = ipfsAPI({
-    host: '127.0.0.1',
-    port: 5001,
-    protocol: 'http'
-});
+// const ipfs = ipfsAPI({
+//     host: '127.0.0.1',
+//     port: 5001,
+//     protocol: 'http'
+// });
+
+const ipfsClient = require('ipfs-http-client');
+const ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
+const {globSource} = ipfsClient;
 
 const privateKey = fs.readFileSync(config.https.privateKey, 'utf8');
 const certificate = fs.readFileSync(config.https.certificate, 'utf8');
@@ -126,16 +130,23 @@ async function getTgPhoto(tgMessage) {
     url = `https://api.telegram.org/file/bot${token}/${filePath}`;
     let fileName = uniqid();
     let extname = path.extname(filePath);
-    let saveFilePath = `/tmp/${fileName}${extname}`;
+    let saveDirPath = `/tmp/${fileName}_1/`;
+    let saveFilePath = `/tmp/${saveDirPath}/${fileName}${extname}`;
+
+    if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
+
+
     const req = request.get(url);
-    req.pipe(fs.createWriteStream(saveFilePath)).on('close', () => {
+    req.pipe(fs.createWriteStream(saveFilePath)).on('close', async () => {
         console.log("文件写入成功");
-        const data = fs.readFileSync(saveFilePath);
-        ipfs.add(data, (err, files) => {
-            let hash = files[0].hash;
-            let sendText = `https://ipfs.n.6do.me:8088/ipfs/${hash}?0${extname}`;
-            sendResponse(chatId, sendText);
-        });
+        const file = await ipfs.add(globSource(pathString, {recursive: true}))
+        console.log(file);
+        // const data = fs.readFileSync(saveFilePath);
+        // ipfs.add(data, (err, files) => {
+        //     let hash = files[0].hash;
+        //     let sendText = `https://ipfs.n.6do.me:8088/ipfs/${hash}?0${extname}`;
+        //     sendResponse(chatId, sendText);
+        // });
     });
 
     console.log(saveFilePath);
