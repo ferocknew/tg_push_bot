@@ -5,4 +5,8 @@ module.exports = app => {
         // const mysqlConfig = await app.configCenter.fetch('mysql');
         // app.database = app.mysql.createInstance(mysqlConfig);
     });
+
+    app.messenger.on('xxx_action', data => {
+        // ...
+    });
 };
