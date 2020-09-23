@@ -68,7 +68,9 @@ class TgbotService extends Service {
         let res = await bot.sendMessage(chatId, text, {parse_mode: "Markdown"}).catch((error) => {
             ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
             ctx.logger.warn(error.code);  // => 'ETELEGRAM'
-            ctx.logger.warn(error.response); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
+            ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
+
+            return false;
         });
         ctx.logger.info('TgbotService.sendMessage || res = %j', res);
 
