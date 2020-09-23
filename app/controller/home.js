@@ -14,8 +14,7 @@ class HomeController extends Controller {
         let p = ctx.params;
         let q = ctx.query;
         let b = ctx.request.body;
-        let bObj = JSON.parse(b);
-        let messageObj = bObj.message;
+        let messageObj = b.message || null;
 
         ctx.logger.info('HomeController.inlineQuery || messageObj = %j', messageObj);
 
