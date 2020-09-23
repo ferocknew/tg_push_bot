@@ -28,6 +28,7 @@ class TgbotService extends Service {
         let chatObj = messageObj['chat'] || {"id": 117166873};
         this.chatId = chatObj['id'];
         await this[commandText](messageObj);
+        return true;
     }
 
     async start(messageObj) {
@@ -42,9 +43,11 @@ class TgbotService extends Service {
             // 新建聊天关系
             chatToken = uniqid();
             const result = await this.app.mysql.insert('users', {chatId, chatToken});
+        } else {
+            chatToken = res['chatToken'];
         }
-
-        this.bot.sendMessage(this.chatId, `${startMsg}`);
+        this.bot.sendMessage(this.chatId, `${startMsg} ${chatToken}`);
+        return true;
     }
 }
 
