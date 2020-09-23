@@ -139,7 +139,7 @@ async function getTgPhoto(tgMessage) {
     const req = request.get(url);
     req.pipe(fs.createWriteStream(saveFilePath)).on('close', async () => {
         console.log("文件写入成功");
-        const file = await ipfs.add(globSource(pathString, {recursive: true}))
+        const file = await ipfs.add(globSource(saveFilePath, {recursive: true}))
         console.log(file);
         // const data = fs.readFileSync(saveFilePath);
         // ipfs.add(data, (err, files) => {
