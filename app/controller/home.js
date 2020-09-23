@@ -38,7 +38,10 @@ class HomeController extends Controller {
 
         let token = p['token'] || null;
         let text = q['text'] || null;
-        if (!token || !text) ctx.body = '';
+        if (!token || !text) {
+            ctx.body = '';
+            return;
+        }
 
         let chatId = await ctx.service.tgbot.getChatId(token);
         if (!chatId) ctx.body = '';

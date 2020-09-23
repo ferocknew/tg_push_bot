@@ -73,7 +73,7 @@ class TgbotService extends Service {
             return false;
         });
         ctx.logger.info('TgbotService.sendMessage || res = %j', res);
-
+        if (!res) return res;
         return true;
     }
 }
