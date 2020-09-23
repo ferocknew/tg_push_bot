@@ -130,7 +130,7 @@ async function getTgPhoto(tgMessage) {
     url = `https://api.telegram.org/file/bot${token}/${filePath}`;
     let fileName = uniqid();
     let extname = path.extname(filePath);
-    let saveDirPath = `/tmp/${fileName}_1/`;
+    let saveDirPath = `/tmp/${fileName}_1`;
     let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
     if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
@@ -139,10 +139,12 @@ async function getTgPhoto(tgMessage) {
     const req = request.get(url);
     req.pipe(fs.createWriteStream(saveFilePath)).on('close', async () => {
         console.log("文件写入成功");
-        const file = await ipfs.add(globSource(saveDirPath, {recursive: true}))
-        console.log(file);
+        const file = await ipfs.add(globSource(saveDirPath, {recursive: true}));
+        // console.log(file);
         let hash = file.cid.toString();
-        console.info(hash);
+        // console.info(hash);
+        let sendText = `https://ipfs.n.6do.me:8088/ipfs/${hash}/${fileName}${extname}`;
+        sendResponse(chatId, sendText);
         // const data = fs.readFileSync(saveFilePath);
         // ipfs.add(data, (err, files) => {
         //     let hash = files[0].hash;
