@@ -11,6 +11,12 @@ class HomeController extends Controller {
 
     async inlineQuery() {
         const {ctx, app} = this;
+
+        let p = ctx.params;
+        let q = ctx.query;
+        ctx.logger.info('HomeController.inlineQuery || p = %j', p);
+        ctx.logger.info('HomeController.inlineQuery || q = %j', q);
+
         ctx.body = '';
         return;
     }
@@ -28,6 +34,8 @@ class HomeController extends Controller {
     async test() {
         const {ctx, app} = this;
         ctx.body = '';
+        let configBot = app.config.bot;
+        ctx.logger.info('HomeController.test || configBot = %j', configBot);
         return;
     }
 
