@@ -1,11 +1,10 @@
 const Service = require('egg').Service;
 
-class tgbotService extends Service {
-    async find(uid) {
-        // const {ctx, app} = this;
-        // let res = await app.mysql.query('select count(*) from users;');
-        // ctx.logger.info('UserService.find || res = %j', res);
+class TgbotService extends Service {
+    async command(commandText) {
+        const {ctx, app} = this;
+        ctx.logger.info('TgbotService.command || commandText = %j', commandText);
     }
 }
 
-module.exports = tgbotService;
+module.exports = TgbotService;
