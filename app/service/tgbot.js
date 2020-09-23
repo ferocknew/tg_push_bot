@@ -59,13 +59,14 @@ class TgbotService extends Service {
         return chatId;
     }
 
-    async sendMessage(chatId, text) {
+    async sendMessage(chatId, text, parseMode) {
         const {ctx, app} = this;
 
+        parseMode = parseMode || 'Markdown';
         chatId = this.chatId || chatId;
         let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
         text = encodeURI(text);
-        let res = await bot.sendMessage(chatId, text, {parse_mode: "Markdown"}).catch((error) => {
+        let res = await bot.sendMessage(chatId, text, {parse_mode: parseMode}).catch((error) => {
             ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
             ctx.logger.warn(error.code);  // => 'ETELEGRAM'
             ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }

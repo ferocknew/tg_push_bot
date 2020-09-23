@@ -39,18 +39,34 @@ class HomeController extends Controller {
 
         let token = p['token'] || null;
         let text = q['text'] || b['text'] || null;
+        let parseMode = q['parse_mode'] || b['parse_mode'] || 'Markdown';
+
+        let photo = q['photo'] || b['photo'] || null;
         if (!token || !text) {
             ctx.body = '';
             return;
         }
 
         let chatId = await ctx.service.tgbot.getChatId(token);
-        if (!chatId) ctx.body = '';
+        if (!chatId) {
+            ctx.body = '';
+            return;
+        }
 
-        await ctx.service.tgbot.sendMessage(chatId, text);
-
-        ctx.body = '';
+        let res = await ctx.service.tgbot.sendMessage(chatId, text, parseMode);
+        ctx.body = res;
         return;
+    }
+
+    async sendPhoto() {
+        const {ctx, app} = this;
+        let p = ctx.params;
+        let q = ctx.query;
+        let b = ctx.request.body;
+
+        let token = p['token'] || null;
+        let photo = q['photo'] || b['photo'] || null;
+
     }
 
     async test() {
