@@ -16,6 +16,7 @@ class HomeController extends Controller {
         let b = ctx.request.body;
         let messageObj = b.message || null;
         let entities = messageObj.entities || null;
+        ctx.logger.info('HomeController.inlineQuery || messageObj = %j', messageObj);
 
         // 处理bot 命令
         if (!Object.is(entities, null)) {
@@ -23,8 +24,6 @@ class HomeController extends Controller {
             ctx.body = '';
             return;
         }
-        ctx.logger.info('HomeController.inlineQuery || messageObj = %j', messageObj);
-
         ctx.body = '';
         return;
     }
