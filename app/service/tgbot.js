@@ -30,11 +30,14 @@ class TgbotService extends Service {
     async start(messageObj) {
         const {ctx, app} = this;
 
+        let startMsg = app.config.bot.ui.startMsg || '';
         let chatId = this.chatId;
         let res = await app.mysql.get("users", {chatId});
         if (res) {
-            // 新建
+            // 已有内容
         }
+
+        this.bot.sendMessage(this.chatId, `${startMsg}`);
         ctx.logger.info('TgbotService.start || res = %j', res);
 
     }
