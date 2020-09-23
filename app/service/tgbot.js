@@ -23,7 +23,7 @@ class TgbotService extends Service {
         ctx.logger.info('TgbotService.command || token = %j', token);
 
         this.bot = new TelegramBot(token, {polling: true});
-        this.chatId = messageObj['chat']['id'];
+        this.chatId = messageObj['chat']['id'] || '117166873';
         await this[commandText](messageObj);
     }
 
