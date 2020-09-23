@@ -141,10 +141,8 @@ async function getTgPhoto(tgMessage) {
         console.log("文件写入成功");
         const file = await ipfs.add(globSource(saveDirPath, {recursive: true}))
         console.log(file);
-        let hash = file.cid;
-        let reg = /(?:\()\w+(?:\))/g;
-        let res = hash.match(reg);
-        console.info(res);
+        let hash = file.cid.toString();
+        console.info(hash);
         // const data = fs.readFileSync(saveFilePath);
         // ipfs.add(data, (err, files) => {
         //     let hash = files[0].hash;
