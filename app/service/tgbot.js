@@ -23,7 +23,7 @@ class TgbotService extends Service {
         const {ctx, app} = this;
 
         let chatId = this.chatId;
-        let res = await app.mysql.get('select count(*) as num from users where `chatId`=?;', [chatId]);
+        let res = await app.mysql.get("users", {chatId});
 
         ctx.logger.info('TgbotService.start || res = %j', res);
 
