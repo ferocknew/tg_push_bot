@@ -35,13 +35,15 @@ class TgbotService extends Service {
         let startMsg = app.config.bot.ui.startMsg || '';
         let chatId = this.chatId;
         let res = await app.mysql.get("users", {chatId});
-        if (res) {
-            // 已有内容
+        let chatToken = '';
+        ctx.logger.info('TgbotService.start || res = %j', res);
+        if (!res) {
+            // 新建聊天关系
+            chatToken = uniqid();
+            const result = await this.app.mysql.insert('users', {chatId, chatToken});
         }
 
         this.bot.sendMessage(this.chatId, `${startMsg}`);
-        ctx.logger.info('TgbotService.start || res = %j', res);
-
     }
 }
 
