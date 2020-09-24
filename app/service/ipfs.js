@@ -27,19 +27,20 @@ class IpfsService extends Service {
 
         const result = await app.curl(url);
         let fileData = result.data;
+        let hash = '';
         try {
             fs.writeFileSync(saveFilePath, fileData);
             ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
             const file = await ipfs.add(globSource(saveDirPath, {recursive: true}));
-            let hash = file.cid.toString();
-            let ipfsUrl = app.config.ipfsUrl;
-
-            let urlObj = ipfsUrl[_.random(0, ipfsUrl.length - 1)];
-            ctx.logger.info('IpfsService.saveUrl || urlObj = %j', urlObj);
-
+            hash = file.cid.toString();
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
         }
+        let ipfsUrl = app.config.ipfsUrl;
+        let urlObj = ipfsUrl[_.random(0, ipfsUrl.length - 1)];
+        let httpTop = urlObj['httpTop'];
+        // ctx.logger.info('IpfsService.saveUrl || urlObj = %j', urlObj);
+        returnUrl = `${httpTop}/ipfs/${hash}/${fileName}${extname}`;
         return returnUrl;
     }
 }
