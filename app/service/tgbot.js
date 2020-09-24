@@ -12,6 +12,7 @@ class TgbotService extends Service {
         // 还可以直接通过 this.app 获取 app 了
 
         this.bot = null;
+        this.newLineString = "\n";
     }
 
     async botInit(chatId) {
@@ -44,13 +45,13 @@ class TgbotService extends Service {
     async help(messageObj) {
         const {ctx, app} = this;
 
+        let msgString = `展示帮助列表：` + this.newLineString;
         let keys = Object.keys(app.config.botCommandList);
         for (let v of keys) {
             let showString = app.config.botCommandList[v];
-            ctx.logger.info('TgbotService.command || showString = %j', showString);
-            ctx.logger.info('TgbotService.command || v = %j', v);
+            msgString = `/${v} ${showString}` + this.newLineString;
         }
-        this.sendMessage(this.chatId, `展示帮助列表：`);
+        this.sendMessage(this.chatId, msgString);
         return true;
     }
 
