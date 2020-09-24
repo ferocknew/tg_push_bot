@@ -1,12 +1,11 @@
 'use strict'
 const Service = require('egg').Service;
 
-const _ = request('lodash');
+const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const ipfsClient = require('ipfs-http-client');
 const ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
-const request = require('request');
 const uniqid = require('uniqid');
 const {globSource} = ipfsClient;
 
