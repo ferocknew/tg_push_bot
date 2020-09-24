@@ -1,6 +1,7 @@
 'use strict'
 const Service = require('egg').Service;
 
+const fs = require('fs');
 const path = require('path');
 const ipfsClient = require('ipfs-http-client');
 const ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
