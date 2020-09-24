@@ -18,7 +18,9 @@ class TgbotService extends Service {
         if (!messageObj) messageObj = {};
         const {ctx, app} = this;
         ctx.logger.info('TgbotService.command || commandText = %j', commandText);
+        let botCommandList = app.config.botCommandList;
 
+        if (botCommandList.indexOf(commandText) < 0) return false;
         if (typeof (this[commandText]) != 'function') return false;
 
         let token = app.config.bot.token;
