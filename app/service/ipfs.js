@@ -5,6 +5,7 @@ const path = require('path');
 const ipfsClient = require('ipfs-http-client');
 const ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
 const request = require('request');
+const uniqid = require('uniqid');
 const {globSource} = ipfsClient;
 
 class IpfsService extends Service {
