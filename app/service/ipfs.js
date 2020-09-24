@@ -17,9 +17,15 @@ class IpfsService extends Service {
         let returnUrl = "ok";
 
         let extname = path.extname(url);
+        let fileName = uniqid();
+        let saveDirPath = `/tmp/${fileName}_1`;
+        let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
+
         const result = await app.curl(url);
         let fileData = result.data.data;
-        ctx.logger.info('IpfsService.saveUrl || extname = %j', extname);
+
+        fs.writeFileSync(saveFilePath, fileData);
+        ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
         return returnUrl;
     }
 }
