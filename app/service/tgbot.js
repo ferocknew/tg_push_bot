@@ -49,7 +49,7 @@ class TgbotService extends Service {
         let keys = Object.keys(app.config.botCommandList);
         for (let v of keys) {
             let showString = app.config.botCommandList[v];
-            msgString = `/${v} ${showString}` + this.newLineString;
+            msgString = msgString + `/${v} ${showString}` + this.newLineString;
         }
         this.sendMessage(this.chatId, msgString);
         return true;
