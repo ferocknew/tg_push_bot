@@ -33,7 +33,7 @@ class TgbotService extends Service {
 
     async start(messageObj) {
         const {ctx, app} = this;
-        ctx.logger.info('TgbotService.command || app.config = %j', app.config);
+        // ctx.logger.info('TgbotService.command || app.config = %j', app.config);
 
         let startMsg = app.config.botUi.startMsg || '';
         let chatId = this.chatId;
@@ -66,7 +66,7 @@ class TgbotService extends Service {
         parseMode = parseMode || 'Markdown';
         chatId = this.chatId || chatId;
         let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
-        text = encodeURI(text);
+        // text = encodeURI(text);
         let res = await bot.sendMessage(chatId, text, {parse_mode: parseMode}).catch((error) => {
             ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
             ctx.logger.warn(error.code);  // => 'ETELEGRAM'
