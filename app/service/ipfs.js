@@ -1,6 +1,7 @@
 'use strict'
 const Service = require('egg').Service;
 
+const _ = request('lodash');
 const fs = require('fs');
 const path = require('path');
 const ipfsClient = require('ipfs-http-client');
@@ -30,6 +31,13 @@ class IpfsService extends Service {
         try {
             fs.writeFileSync(saveFilePath, fileData);
             ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
+            const file = await ipfs.add(globSource(saveDirPath, {recursive: true}));
+            let hash = file.cid.toString();
+            let ipfsUrl = app.config.ipfsUrl;
+
+            let urlObj = ipfsUrl[_.random(0, ipfsUrl.length - 1)];
+            ctx.logger.info('IpfsService.saveUrl || urlObj = %j', urlObj);
+
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
         }
