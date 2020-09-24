@@ -4,6 +4,7 @@ module.exports = app => {
         // { host: 'mysql.com', port: '3306', user: 'test_user', password: 'test_password', database: 'test' }
         // const mysqlConfig = await app.configCenter.fetch('mysql');
         // app.database = app.mysql.createInstance(mysqlConfig);
+        // console.info(_);
     });
 
     app.messenger.on('xxx_action', data => {
