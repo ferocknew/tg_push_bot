@@ -44,6 +44,12 @@ class TgbotService extends Service {
     async help(messageObj) {
         const {ctx, app} = this;
 
+        let keys = Object.keys(app.config.botCommandList);
+        for (let v of keys) {
+            let showString = app.config.botCommandList[v];
+            ctx.logger.info('TgbotService.command || showString = %j', showString);
+            ctx.logger.info('TgbotService.command || v = %j', v);
+        }
         this.sendMessage(this.chatId, `展示帮助列表：`);
         return true;
     }
