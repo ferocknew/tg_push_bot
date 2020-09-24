@@ -17,6 +17,7 @@ class TgbotService extends Service {
     }
 
     async botInit(chatId) {
+        const {ctx, app} = this;
         this.bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
         this.chatId = this.chatId || chatId;
     }
