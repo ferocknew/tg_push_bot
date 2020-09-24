@@ -24,7 +24,7 @@ class IpfsService extends Service {
         let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
         const result = await app.curl(url);
-        let fileData = result.data.data;
+        let fileData = result.data;
         try {
             fs.writeFileSync(saveFilePath, fileData);
             ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
