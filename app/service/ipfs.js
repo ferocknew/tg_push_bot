@@ -23,6 +23,8 @@ class IpfsService extends Service {
         let saveDirPath = `/tmp/${fileName}_1`;
         let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
+        if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
+
         const result = await app.curl(url);
         let fileData = result.data;
         try {
