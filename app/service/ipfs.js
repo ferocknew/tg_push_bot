@@ -25,9 +25,12 @@ class IpfsService extends Service {
 
         const result = await app.curl(url);
         let fileData = result.data.data;
-
-        fs.writeFileSync(saveFilePath, fileData);
-        ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
+        try {
+            fs.writeFileSync(saveFilePath, fileData);
+            ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
+        } catch (e) {
+            ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
+        }
         return returnUrl;
     }
 }
