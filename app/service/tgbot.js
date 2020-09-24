@@ -13,6 +13,7 @@ class TgbotService extends Service {
 
         this.bot = null;
         this.newLineString = "\n";
+        this.errorString = "机器人还未初始化，请执行： /start";
     }
 
     async botInit(chatId) {
@@ -103,6 +104,40 @@ class TgbotService extends Service {
         if (res) chatId = res['chatId'];
 
         return chatId;
+    }
+
+    /**
+     * ipfs 保存
+     * @returns {Promise<boolean>}
+     */
+    async ipfsSave(messageObj) {
+        const {ctx, app} = this;
+        let msgString = "";
+
+        this.chatId = messageObj['chat']['id'];
+        let chatId = this.chatId;
+        let res = await app.mysql.get("users", {chatId});
+        if (!res) {
+            this.sendMessage(chatId, this.errorString);
+            return;
+        }
+
+        let ipfsFlag = res['ipfs_flag'];
+        if (ipfsFlag != 1) return;
+
+        let photoInfo = messageObj.photo;
+        let fileNum = photoInfo.length;
+        let fileId = photoInfo[fileNum - 1].file_id;
+        let token = app.config.bot.token;
+        let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
+
+        const result = await app.curl(url, {
+            dataType: 'json',
+        });
+
+        ctx.logger.info('TgbotService.ipfsSave || result = %j', result);
+
+        return;
     }
 
     async sendMessage(chatId, text, parseMode) {

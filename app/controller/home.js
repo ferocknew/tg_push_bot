@@ -17,10 +17,18 @@ class HomeController extends Controller {
         let messageObj = b.message || null;
         ctx.logger.info('HomeController.inlineQuery || b = %j', b);
         let entities = messageObj.entities || null;
+        let photoObj = messageObj.photo || null;
 
         // 处理bot 命令
         if (!Object.is(entities, null)) {
             await ctx.service.tgbot.command(messageObj.text.substr(1), messageObj);
+            ctx.body = '';
+            return;
+        }
+
+        // 处理发送图片
+        if (!Object.is(photoObj, null)) {
+            let res = await ctx.service.tgbot.ipfsSave(messageObj);
             ctx.body = '';
             return;
         }
