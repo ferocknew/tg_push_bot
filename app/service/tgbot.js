@@ -33,6 +33,7 @@ class TgbotService extends Service {
 
     async start(messageObj) {
         const {ctx, app} = this;
+        ctx.logger.info('TgbotService.command || app.config = %j', app.config);
 
         let startMsg = app.config.botUi.startMsg || '';
         let chatId = this.chatId;
