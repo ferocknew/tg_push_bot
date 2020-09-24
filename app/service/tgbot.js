@@ -14,13 +14,21 @@ class TgbotService extends Service {
         this.bot = null;
     }
 
+    async botInit(chatId) {
+        this.bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
+        this.chatId = this.chatId || chatId;
+    }
+
     async command(commandText, messageObj) {
         if (!messageObj) messageObj = {};
         const {ctx, app} = this;
         ctx.logger.info('TgbotService.command || commandText = %j', commandText);
         let botCommandList = app.config.botCommandList;
 
-        if (botCommandList.indexOf(commandText) < 0) return false;
+        if (botCommandList.indexOf(commandText) < 0) {
+            ctx.logger.info('TgbotService.command || 请求的命令不在命令白名单内！');
+            return false;
+        }
         if (typeof (this[commandText]) != 'function') return false;
 
         let token = app.config.bot.token;
@@ -64,12 +72,11 @@ class TgbotService extends Service {
 
     async sendMessage(chatId, text, parseMode) {
         const {ctx, app} = this;
-
         parseMode = parseMode || 'Markdown';
-        chatId = this.chatId || chatId;
-        let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
+        this.botInit(chatId);
+
         // text = encodeURI(text);
-        let res = await bot.sendMessage(chatId, text, {parse_mode: parseMode}).catch((error) => {
+        let res = await this.bot.sendMessage(this.chatId, text, {parse_mode: parseMode}).catch((error) => {
             ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
             ctx.logger.warn(error.code);  // => 'ETELEGRAM'
             ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
@@ -82,12 +89,10 @@ class TgbotService extends Service {
 
     async sendPhoto(chatId, photo) {
         const {ctx, app} = this;
-
-        chatId = this.chatId || chatId;
-        let bot = this.bot || new TelegramBot(app.config.bot.token, {polling: false});
+        this.botInit(chatId);
         photo = encodeURI(photo);
 
-        let res = await bot.sendPhoto(chatId, photo).catch((error) => {
+        let res = await this.bot.sendPhoto(this.chatId, photo).catch((error) => {
             ctx.logger.warn('TgbotService.sendMessage || sendMessage error !!');  // => 'ETELEGRAM'
             ctx.logger.warn(error.code);  // => 'ETELEGRAM'
             ctx.logger.warn(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
