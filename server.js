@@ -118,8 +118,9 @@ let removeUid = function (uid) {
 
 async function getTgPhoto(tgMessage) {
     let photoInfo = tgMessage.photo;
+    let fileNum = photoInfo.length;
     let chatId = tgMessage.chat.id;
-    let fileId = photoInfo[2].file_id;
+    let fileId = photoInfo[fileNum - 1].file_id;
     let token = config.ui.token;
     let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
     // console.log(url);
@@ -134,7 +135,6 @@ async function getTgPhoto(tgMessage) {
     let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
     if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
-
 
     const req = request.get(url);
     req.pipe(fs.createWriteStream(saveFilePath)).on('close', async () => {
