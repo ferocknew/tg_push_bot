@@ -25,7 +25,7 @@ class TgbotService extends Service {
         ctx.logger.info('TgbotService.command || commandText = %j', commandText);
         let botCommandList = app.config.botCommandList;
 
-        if (botCommandList.indexOf(commandText) < 0) {
+        if (!botCommandList.hasOwnProperty(commandText)) {
             ctx.logger.info('TgbotService.command || 请求的命令不在命令白名单内！');
             return false;
         }
@@ -38,6 +38,13 @@ class TgbotService extends Service {
         let chatObj = messageObj['chat'] || {"id": 117166873};
         this.chatId = chatObj['id'];
         await this[commandText](messageObj);
+        return true;
+    }
+
+    async help(messageObj) {
+        const {ctx, app} = this;
+
+        this.sendMessage(this.chatId, `展示帮助列表：`);
         return true;
     }
 
