@@ -143,7 +143,7 @@ async function getTgPhoto(tgMessage) {
         // console.log(file);
         let hash = file.cid.toString();
         // console.info(hash);
-        let sendText = `https://ipfs.n.6do.me:8088/ipfs/${hash}/${fileName}${extname}`;
+        let sendText = `https://hashnews.k1ic.com/ipfs/${hash}/${fileName}${extname}`;
         sendResponse(chatId, sendText);
         // const data = fs.readFileSync(saveFilePath);
         // ipfs.add(data, (err, files) => {
