@@ -9,7 +9,8 @@ module.exports = {
     },
     botCommandList: {
         start: "用户开始机器人对话！",
-        help: "帮助列表"
+        help: "帮助列表",
+        ipfsOpen: "打开当前会话的 ipfs 保存功能。"
     }
 };
 

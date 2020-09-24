@@ -55,6 +55,27 @@ class TgbotService extends Service {
         return true;
     }
 
+    async ipfsOpen(messageObj) {
+        const {ctx, app} = this;
+        let msgString = "前会话的 ipfs 保存功能已开启！";
+        let chatId = this.chatId;
+        let res = await app.mysql.get("users", {chatId});
+        if (!res) {
+            msgString = "请先执行 /start";
+        } else {
+            const row = {
+                ipfs_flag: 1
+            };
+            const options = {
+                where: {chatId}
+            };
+            const result = await this.app.mysql.update('users', row, options);
+        }
+
+        this.sendMessage(this.chatId, msgString);
+        return true;
+    }
+
     async start(messageObj) {
         const {ctx, app} = this;
         // ctx.logger.info('TgbotService.command || app.config = %j', app.config);
