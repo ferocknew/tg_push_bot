@@ -138,8 +138,10 @@ class TgbotService extends Service {
         let filePath = jsonData['result']['file_path'];
 
         url = `https://api.telegram.org/file/bot${token}/${filePath}`;
-        ctx.logger.info('TgbotService.ipfsSave || url = %j', url);
+        // ctx.logger.info('TgbotService.ipfsSave || url = %j', url);
+        let returnUrl = await ctx.service.otherService.ipfs.saveUrl(url);
 
+        this.sendMessage(chatId, returnUrl);
         return;
     }
 
