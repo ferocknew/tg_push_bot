@@ -133,9 +133,26 @@ class TgbotService extends Service {
         let token = app.config.bot.token;
         let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
 
-        const result = await app.curl(url, {
-            dataType: 'json',
-        });
+        let result = null;
+        let retryFlag = true;
+        for (var i = 0; i < 20; i++) {
+            try {
+                result = await app.curl(url, {
+                    dataType: 'json',
+                    timeout: 30000
+                });
+                if (result != null) retryFlag = false;
+            } catch (e) {
+                ctx.logger.warn('TgbotService.ipfsSave ||  error !! e = %j', e);  // => 'ETELEGRAM'
+            }
+
+            if (retryFlag == false) {
+                break;
+            } else {
+                ctx.logger.info('TgbotService.ipfsSave || 请求失败需要重试！重试次数 i = %j', i);
+                await this.sleep(1500);
+            }
+        }
         let jsonData = result.data;
         let filePath = jsonData['result']['file_path'];
 
@@ -179,6 +196,14 @@ class TgbotService extends Service {
         ctx.logger.info('TgbotService.sendMessage || res = %j', res);
         return res;
 
+    }
+
+    async sleep(time) {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve()
+            }, time)
+        })
     }
 }
 
