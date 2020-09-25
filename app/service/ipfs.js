@@ -88,6 +88,7 @@ class IpfsService extends Service {
                 break;
             } else {
                 ctx.logger.info('IpfsService.saveToCheveretoAPI || 请求失败需要重试！, this.retryTimeout = %j', this.retryTimeout);
+                ctx.logger.info('IpfsService.saveToCheveretoAPI || 请求失败需要重试！重试次数 i = %j', i);
                 await this.sleep(this.retryTimeout);
             }
         }
