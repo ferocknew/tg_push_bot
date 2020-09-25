@@ -12,6 +12,8 @@ const {globSource} = ipfsClient;
 class IpfsService extends Service {
     constructor(ctx) {
         super(ctx);
+        this.retryNum = 20;
+        this.retryTimeout = 1500;
     }
 
     async saveUrl(url) {
@@ -60,22 +62,41 @@ class IpfsService extends Service {
         let apiKey = cheveretoConfig.apiKey;
         let ownHost = cheveretoConfig.ownHost;
         let apiSaveURL = `${host}/api/1/upload/?key=${apiKey}&source=${ownHost}${uri}&format=json`;
-        try {
-            ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto 请求地址, apiSaveURL = %j', apiSaveURL);
 
-            const result = await app.curl(apiSaveURL, {
-                dataType: 'json',
-            });
-            let jsonData = result.data;
-            if (jsonData.success) {
-                let msg = jsonData.success.message;
-                ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto success, msg = %j', msg);
-            } else {
-                ctx.logger.info('IpfsService.saveToCheveretoAPI || jsonData = %j', jsonData);
+        let retryFlag = true;
+        for (var i = 0; i < this.retryNum; i++) {
+            try {
+                ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto 请求地址, apiSaveURL = %j', apiSaveURL);
+
+                const result = await app.curl(apiSaveURL, {
+                    dataType: 'json',
+                });
+                let jsonData = result.data;
+                if (jsonData.success) {
+                    let msg = jsonData.success.message;
+                    ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto success, msg = %j', msg);
+                } else {
+                    ctx.logger.info('IpfsService.saveToCheveretoAPI || jsonData = %j', jsonData);
+                    // retryFlag false;
+                }
+                retryFlag = false;
+            } catch (e) {
+                ctx.logger.warn('IpfsService.saveToCheveretoAPI || e = %j', e);
             }
-        } catch (e) {
-            ctx.logger.warn('IpfsService.saveToCheveretoAPI || e = %j', e);
+            if (retryFlag == false) {
+                break;
+            } else {
+                await this.sleep(this.retryTimeout);
+            }
         }
+    }
+
+    async sleep(time) {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve()
+            }, time)
+        })
     }
 }
 
