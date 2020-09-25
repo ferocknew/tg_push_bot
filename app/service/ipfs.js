@@ -35,6 +35,7 @@ class IpfsService extends Service {
             fs.writeFileSync(saveFilePath, fileData);
             ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
             let linkString = app.config.ipfsConfig.linkString;
+            ctx.logger.info('IpfsService.saveUrl || linkString = %j', linkString);
             this.ipfs = ipfsClient(linkString);
             const file = await this.ipfs.add(globSource(saveDirPath, {recursive: true}));
             hash = file.cid.toString();
