@@ -14,6 +14,7 @@ class IpfsService extends Service {
         super(ctx);
         this.retryNum = 20;
         this.retryTimeout = 1500;
+        this.saveToCheveretoTimeout = 30000;
     }
 
     async saveUrl(url) {
@@ -70,6 +71,7 @@ class IpfsService extends Service {
 
                 const result = await app.curl(apiSaveURL, {
                     dataType: 'json',
+                    timeout: this.saveToCheveretoTimeout
                 });
                 let jsonData = result.data;
                 if (jsonData.success) {
