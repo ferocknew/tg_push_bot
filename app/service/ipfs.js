@@ -82,10 +82,12 @@ class IpfsService extends Service {
                 retryFlag = false;
             } catch (e) {
                 ctx.logger.warn('IpfsService.saveToCheveretoAPI || e = %j', e);
+                retryFlag = true;
             }
             if (retryFlag == false) {
                 break;
             } else {
+                ctx.logger.info('IpfsService.saveToCheveretoAPI || 请求失败需要重试！, this.retryTimeout = %j', this.retryTimeout);
                 await this.sleep(this.retryTimeout);
             }
         }
