@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "egg-scripts start --port=7001 --daemon --title=tg-bot",
-    "dev": "egg-bin dev"
+    "dev": "egg-bin dev",
+    "stop": "egg-scripts stop --title=tg-bot"
   },
   "author": "Fndroid",
   "license": "ISC",
