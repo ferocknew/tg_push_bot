@@ -5,7 +5,6 @@ const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const ipfsClient = require('ipfs-http-client');
-const ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
 const uniqid = require('uniqid');
 const {globSource} = ipfsClient;
 
@@ -15,6 +14,7 @@ class IpfsService extends Service {
         this.retryNum = 10;
         this.retryTimeout = 1500;
         this.saveToCheveretoTimeout = 30000;
+        this.ipfs = null;
     }
 
     async saveUrl(url) {
@@ -34,7 +34,9 @@ class IpfsService extends Service {
         try {
             fs.writeFileSync(saveFilePath, fileData);
             ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
-            const file = await ipfs.add(globSource(saveDirPath, {recursive: true}));
+            let linkString = app.config.ipfsConfig.linkString;
+            this.ipfs = ipfsClient(linkString);
+            const file = await this.ipfs.add(globSource(saveDirPath, {recursive: true}));
             hash = file.cid.toString();
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
