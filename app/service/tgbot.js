@@ -154,6 +154,7 @@ class TgbotService extends Service {
             }
         }
         let jsonData = result.data;
+        ctx.logger.info('TgbotService.ipfsSave || jsonData = %j', jsonData);
         let filePath = jsonData['result']['file_path'];
 
         url = `https://api.telegram.org/file/bot${token}/${filePath}`;
