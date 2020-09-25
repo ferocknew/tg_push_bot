@@ -42,6 +42,7 @@ class IpfsService extends Service {
             this.ipfs = ipfsClient(linkObj);
             const file = await this.ipfs.add(globSource(saveDirPath, {recursive: true}));
             hash = file.cid.toString();
+            ctx.logger.info('IpfsService.saveUrl || ipfs 添加成功 cid = %j', hash);
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
         }
