@@ -61,6 +61,8 @@ class IpfsService extends Service {
         let ownHost = cheveretoConfig.ownHost;
         let apiSaveURL = `${host}/api/1/upload/?key=${apiKey}&source=${ownHost}${uri}&format=json`;
         try {
+            ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto 请求地址, apiSaveURL = %j', apiSaveURL);
+
             const result = await app.curl(apiSaveURL, {
                 dataType: 'json',
             });
