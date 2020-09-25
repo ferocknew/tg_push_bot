@@ -12,7 +12,7 @@ const {globSource} = ipfsClient;
 class IpfsService extends Service {
     constructor(ctx) {
         super(ctx);
-        this.retryNum = 20;
+        this.retryNum = 5;
         this.retryTimeout = 1500;
         this.saveToCheveretoTimeout = 30000;
     }
