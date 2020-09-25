@@ -40,8 +40,40 @@ class IpfsService extends Service {
         let urlObj = ipfsUrl[_.random(0, ipfsUrl.length - 1)];
         let httpTop = urlObj['httpTop'];
         // ctx.logger.info('IpfsService.saveUrl || urlObj = %j', urlObj);
-        returnUrl = `${httpTop}/ipfs/${hash}/${fileName}${extname}`;
+        let uri = `/ipfs/${hash}/${fileName}${extname}`;
+        returnUrl = `${httpTop}${uri}`;
+        try {
+            this.saveToCheveretoAPI(uri);
+        } catch (e) {
+            ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
+        }
+
         return returnUrl;
+    }
+
+    async saveToCheveretoAPI(uri) {
+        const {ctx, app} = this;
+        let cheveretoConfig = app.config.chevereto;
+        if (!cheveretoConfig.flag) return false;
+
+        let host = cheveretoConfig.host;
+        let apiKey = cheveretoConfig.apiKey;
+        let ownHost = cheveretoConfig.ownHost;
+        let apiSaveURL = `${host}/api/1/upload/?key=${apiKey}&source=${ownHost}${uri}&format=json`;
+        try {
+            const result = await app.curl(apiSaveURL, {
+                dataType: 'json',
+            });
+            let jsonData = result.data;
+            if (jsonData.success) {
+                let msg = jsonData.success.message;
+                ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto success, msg = %j', msg);
+            } else {
+                ctx.logger.info('IpfsService.saveToCheveretoAPI || jsonData = %j', jsonData);
+            }
+        } catch (e) {
+            ctx.logger.warn('IpfsService.saveToCheveretoAPI || e = %j', e);
+        }
     }
 }
 
