@@ -34,11 +34,15 @@ class IpfsService extends Service {
         try {
             fs.writeFileSync(saveFilePath, fileData);
             ctx.logger.info('IpfsService.saveUrl || 文件写入成功 saveFilePath = %j', saveFilePath);
-            let linkString = app.config.ipfsConfig.linkString;
-            ctx.logger.info('IpfsService.saveUrl || linkString = %j', linkString);
-            this.ipfs = ipfsClient(linkString);
+            // let linkString = app.config.ipfsConfig.linkString;
+            let linkObj = app.config.ipfsConfig.linkObj;
+            // ctx.logger.info('IpfsService.saveUrl || linkString = %j', linkString);
+            ctx.logger.info('IpfsService.saveUrl || linkObj = %j', linkObj);
+
+            this.ipfs = ipfsClient(linkObj);
             const file = await this.ipfs.add(globSource(saveDirPath, {recursive: true}));
             hash = file.cid.toString();
+            ctx.logger.info('IpfsService.saveUrl || ipfs 添加成功 cid = %j', hash);
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
         }
