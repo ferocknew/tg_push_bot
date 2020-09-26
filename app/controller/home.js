@@ -21,7 +21,9 @@ class HomeController extends Controller {
 
         // 处理bot 命令
         if (!Object.is(entities, null)) {
-            await ctx.service.tgbot.command(messageObj.text.substr(1), messageObj);
+            let entitiesType = entities[0]['type'];
+            if (entitiesType == 'bot_command')
+                await ctx.service.tgbot.command(messageObj.text.substr(1), messageObj);
             ctx.body = '';
             return;
         }
