@@ -158,7 +158,7 @@ class HomeController extends Controller {
                 name: "o4wz6hm1dqzkfl3nr09.jpg",
 //                 file: fs.createReadStream(filePath)
             },
-            file: fs.createReadStream(filePath),
+            file: filePath,
             headers: {
                 'Cookie': cookie.join("")
             },
