@@ -132,6 +132,9 @@ class HomeController extends Controller {
             data: {
                 method: 'pwg.session.getStatus'
             },
+            headers: {
+                'Cookie': cookies.join("")
+            },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
