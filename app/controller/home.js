@@ -138,7 +138,7 @@ class HomeController extends Controller {
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
-        ctx.body = JSON.stringify(result);
+        ctx.body = res.data;
         return;
     }
 
