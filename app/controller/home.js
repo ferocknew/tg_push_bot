@@ -156,9 +156,9 @@ class HomeController extends Controller {
                 category: category,
                 pwg_token: token,
                 name: "o4wz6hm1dqzkfl3nr09.jpg",
-                file: fs.createReadStream(filePath)
+                // file: fs.createReadStream(filePath)
             },
-            file: filePath,
+            files: filePath,
             headers: {
                 'Cookie': cookie.join("")
             },
