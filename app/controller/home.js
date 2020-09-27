@@ -162,7 +162,7 @@ class HomeController extends Controller {
                 'Cookie': cookie.join("")
             },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
-            dataType: 'json',
+            dataType: 'text',
             timeout: 120000,
         });
         // res = await ctx.curl(url, {
