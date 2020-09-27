@@ -161,6 +161,7 @@ class HomeController extends Controller {
             },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
+            timeout: 120000,
         });
         // res = await ctx.curl(url, {
         //     // 必须指定 method
