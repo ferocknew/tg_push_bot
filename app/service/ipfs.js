@@ -53,7 +53,9 @@ class IpfsService extends Service {
         let uri = `/ipfs/${hash}/${fileName}${extname}`;
         returnUrl = `${httpTop}${uri}`;
         try {
-            this.saveToCheveretoAPI(uri);
+            // this.saveToCheveretoAPI(uri);
+            ctx.service.piwigo.uploadImg(saveFilePath);
+
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
         }
