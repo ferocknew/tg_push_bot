@@ -108,8 +108,22 @@ class HomeController extends Controller {
 
         //
         let piwigoConfig = app.config.piwigo;
+        let url = piwigoConfig.url;
         ctx.logger.info('HomeController.test || piwigoConfig = %j', piwigoConfig);
-        ctx.body = '';
+        const result = await ctx.curl(url, {
+            // 必须指定 method
+            method: 'POST',
+            // 通过 contentType 告诉 HttpClient 以 JSON 格式发送
+            contentType: 'json',
+            data: {
+                method: 'wpwg.session.login',
+                username: piwigoConfig.userName,
+                password: piwigoConfig.password
+            },
+            // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
+            dataType: 'json',
+        });
+        ctx.body = result.data;
         return;
     }
 
