@@ -138,7 +138,34 @@ class HomeController extends Controller {
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
-        ctx.body = res.data;
+        let token = res.data.result.pwg_token;
+        let category = piwigoConfig.category;
+        // let fileRes = await app.curl("https://hashnews.k1ic.com/ipfs/QmZkGfrbgguZ2vsBNgKEP3ctoz5iKxUDETL24RDBivEgKC/o4wz6hm1dqzkfl3ogus.jpg");
+        // let fileData = fileRes.data;
+
+        let getListRes = await ctx.curl(url, {
+            // 必须指定 method
+            method: 'POST',
+            // 通过 contentType 告诉 HttpClient 以 JSON 格式发送
+            // contentType: 'json',
+            data: {
+                method: 'pwg.categories.getList'
+            },
+            headers: {
+                'Cookie': cookie.join("")
+            },
+            // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
+            dataType: 'json',
+        });
+        // res = await ctx.curl(url, {
+        //     // 必须指定 method
+        //     method: 'POST',
+        //     data: {
+        //         method: 'pwg.images.upload',
+        //
+        //     },
+        // }
+        ctx.body = getListRes.data;
         return;
     }
 
