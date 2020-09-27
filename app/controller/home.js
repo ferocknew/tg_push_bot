@@ -123,6 +123,8 @@ class HomeController extends Controller {
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
+        let cookie = result.headers.set-cookie;
+        ctx.logger.info('HomeController.test || cookie = %j', cookie);
         let res = await ctx.curl(url, {
             // 必须指定 method
             method: 'POST',
