@@ -155,7 +155,7 @@ class HomeController extends Controller {
                 category: category,
                 pwg_token: token
             },
-            files: fs.createReadStream(filePath),
+            file: fs.createReadStream(filePath),
             headers: {
                 'Cookie': cookie.join("")
             },
