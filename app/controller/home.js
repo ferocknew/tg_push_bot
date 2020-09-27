@@ -144,7 +144,7 @@ class HomeController extends Controller {
         let category = piwigoConfig.categorieId;
         // let fileRes = await app.curl("https://hashnews.k1ic.com/ipfs/QmZkGfrbgguZ2vsBNgKEP3ctoz5iKxUDETL24RDBivEgKC/o4wz6hm1dqzkfl3ogus.jpg");
         // let fileData = fileRes.data;
-        let filePath = "/tmp/o4wz6hm1dqzkfl3nr09_1/o4wz6hm1dqzkfl3nr09.jpg";
+        let filePath = "/tmp/o4wz6hm1dqzkfl3nr09_1/o4wz6hm1dqzkfl3nr09.JPG";
 
         let getListRes = await ctx.curl(url, {
             // 必须指定 method
