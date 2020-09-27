@@ -154,14 +154,15 @@ class HomeController extends Controller {
             data: {
                 method: 'pwg.images.upload',
                 category: category,
-                pwg_token: token
+                pwg_token: token,
+                name: "o4wz6hm1dqzkfl3nr09.jpg"
             },
             file: fs.createReadStream(filePath),
             headers: {
                 'Cookie': cookie.join("")
             },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
-            // dataType: 'json',
+            dataType: 'json',
             timeout: 120000,
         });
         // res = await ctx.curl(url, {
