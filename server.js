@@ -117,6 +117,7 @@ let removeUid = function (uid) {
 };
 
 async function getTgPhoto(tgMessage) {
+    return false;
     let photoInfo = tgMessage.photo;
     let fileNum = photoInfo.length;
     let chatId = tgMessage.chat.id;
