@@ -116,7 +116,7 @@ class HomeController extends Controller {
             // 通过 contentType 告诉 HttpClient 以 JSON 格式发送
             // contentType: 'json',
             data: {
-                method: 'wpwg.session.login',
+                method: 'pwg.session.login',
                 username: piwigoConfig.userName,
                 password: piwigoConfig.password
             },
