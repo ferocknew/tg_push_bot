@@ -109,7 +109,6 @@ class HomeController extends Controller {
         //
         let piwigoConfig = app.config.piwigo;
         let url = piwigoConfig.url;
-        ctx.logger.info('HomeController.test || piwigoConfig = %j', piwigoConfig);
         const result = await ctx.curl(url, {
             // 必须指定 method
             method: 'POST',
@@ -123,7 +122,7 @@ class HomeController extends Controller {
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
-        let cookie = result.headers.set-cookie;
+        let cookie = result.headers;
         ctx.logger.info('HomeController.test || cookie = %j', cookie);
         let res = await ctx.curl(url, {
             // 必须指定 method
