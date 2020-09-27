@@ -140,6 +140,7 @@ class HomeController extends Controller {
             dataType: 'json',
         });
         let token = res.data.result.pwg_token;
+        ctx.logger.info('HomeController.test || token = %j', token);
         let category = piwigoConfig.categorieId;
         // let fileRes = await app.curl("https://hashnews.k1ic.com/ipfs/QmZkGfrbgguZ2vsBNgKEP3ctoz5iKxUDETL24RDBivEgKC/o4wz6hm1dqzkfl3ogus.jpg");
         // let fileData = fileRes.data;
@@ -160,7 +161,7 @@ class HomeController extends Controller {
                 'Cookie': cookie.join("")
             },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
-            dataType: 'json',
+            // dataType: 'json',
             timeout: 120000,
         });
         // res = await ctx.curl(url, {
