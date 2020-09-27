@@ -139,9 +139,10 @@ class HomeController extends Controller {
             dataType: 'json',
         });
         let token = res.data.result.pwg_token;
-        let category = piwigoConfig.category;
+        let category = piwigoConfig.categorieId;
         // let fileRes = await app.curl("https://hashnews.k1ic.com/ipfs/QmZkGfrbgguZ2vsBNgKEP3ctoz5iKxUDETL24RDBivEgKC/o4wz6hm1dqzkfl3ogus.jpg");
         // let fileData = fileRes.data;
+        let filePath = "/tmp/o4wz6hm1dqzkfl3nr09_1/o4wz6hm1dqzkfl3nr09.jpg";
 
         let getListRes = await ctx.curl(url, {
             // 必须指定 method
@@ -149,8 +150,11 @@ class HomeController extends Controller {
             // 通过 contentType 告诉 HttpClient 以 JSON 格式发送
             // contentType: 'json',
             data: {
-                method: 'pwg.categories.getList'
+                method: 'pwg.images.upload',
+                category: category,
+                pwg_token: token
             },
+            files: fs.createReadStream(filePath),
             headers: {
                 'Cookie': cookie.join("")
             },
