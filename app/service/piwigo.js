@@ -115,7 +115,7 @@ class PiwigoService extends Service {
             dataType: 'json',
         });
         let cookie = result.headers['set-cookie'];
-        ctx.logger.info('PiwigoService.uploadImgFromUrl  || cookie = %j', cookie);
+        // ctx.logger.info('PiwigoService.uploadImgFromUrl  || cookie = %j', cookie);
         let res = await ctx.curl(url, {
             // 必须指定 method
             method: 'POST',
@@ -131,7 +131,7 @@ class PiwigoService extends Service {
             dataType: 'json',
         });
         let token = res.data.result.pwg_token;
-        ctx.logger.info('PiwigoService.uploadImgFromUrl  || token = %j', token);
+        // ctx.logger.info('PiwigoService.uploadImgFromUrl  || token = %j', token);
         let category = piwigoConfig.categorieId;
         // let fileRes = await app.curl("https://hashnews.k1ic.com/ipfs/QmZkGfrbgguZ2vsBNgKEP3ctoz5iKxUDETL24RDBivEgKC/o4wz6hm1dqzkfl3ogus.jpg");
         // let fileData = fileRes.data;
