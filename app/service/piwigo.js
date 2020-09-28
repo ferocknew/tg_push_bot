@@ -25,6 +25,7 @@ class PiwigoService extends Service {
                 username: piwigoConfig.userName,
                 password: piwigoConfig.password
             },
+            timeout: this.timeout,
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
@@ -41,6 +42,7 @@ class PiwigoService extends Service {
             headers: {
                 'Cookie': cookie.join("")
             },
+            timeout: this.timeout,
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
