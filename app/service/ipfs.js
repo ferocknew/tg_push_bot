@@ -47,6 +47,7 @@ class IpfsService extends Service {
             ctx.logger.info('IpfsService.saveUrl || ipfs 添加成功 cid = %j', hash);
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
+            return "ipfs add error !";
         }
         let ipfsUrl = app.config.ipfsUrl;
         let urlObj = ipfsUrl[_.random(0, ipfsUrl.length - 1)];
