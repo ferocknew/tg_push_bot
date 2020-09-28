@@ -121,7 +121,7 @@ class PiwigoService extends Service {
             headers: {
                 'Cookie': cookieString
             },
-            dataType: 'json',
+            dataType: 'text',
         });
         let picRes = getListRes.data;
         if (picRes.stat == 'ok') {
