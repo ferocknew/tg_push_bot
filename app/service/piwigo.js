@@ -49,6 +49,8 @@ class PiwigoService extends Service {
     async uploadImg(filePath) {
         const {ctx, app} = this;
         let token = await this.getToken();
+
+        let piwigoConfig = app.config.piwigo;
         let category = piwigoConfig.categorieId;
         // let fileRes = await app.curl("https://hashnews.k1ic.com/ipfs/QmZkGfrbgguZ2vsBNgKEP3ctoz5iKxUDETL24RDBivEgKC/o4wz6hm1dqzkfl3ogus.jpg");
         // let fileData = fileRes.data;
@@ -91,6 +93,7 @@ class PiwigoService extends Service {
         ctx.logger.info('PiwigoService.uploadImgFromUrl || url = %j', url);
 
         let token = await this.getToken();
+        let piwigoConfig = app.config.piwigo;
         let category = piwigoConfig.categorieId;
 
         let getListRes = await ctx.curl(url, {
