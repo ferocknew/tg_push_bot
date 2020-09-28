@@ -29,7 +29,6 @@ class IpfsService extends Service {
         if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
 
         const result = await app.curl(url, {
-            dataType: 'json',
             timeout: this.curlTimeout
         });
         let fileData = result.data;
