@@ -88,8 +88,11 @@ class PiwigoService extends Service {
         return true;
     }
 
-    async uploadImgFromUrl(url) {
+    async uploadImgFromUrl(uri) {
         const {ctx, app} = this;
+        let cheveretoConfig = app.config.chevereto;
+        let ownHost = cheveretoConfig.ownHost;
+        let url = `${ownHost}${uri}`;
         ctx.logger.info('PiwigoService.uploadImgFromUrl || url = %j', url);
 
         let token = await this.getToken();
