@@ -159,7 +159,7 @@ class HomeController extends Controller {
                 source:piwigoConfig.testUrl
                 // file: fs.createReadStream(filePath)
             },
-            files: filePath,
+            // files: filePath,
             headers: {
                 'Cookie': cookie.join("")
             },
