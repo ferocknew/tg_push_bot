@@ -14,6 +14,7 @@ class TgbotService extends Service {
         this.bot = null;
         this.newLineString = "\n";
         this.errorString = "机器人还未初始化，请执行： /start";
+        this.curlTimeout = 30000;
     }
 
     async botInit(chatId) {
@@ -139,7 +140,7 @@ class TgbotService extends Service {
             try {
                 result = await app.curl(url, {
                     dataType: 'json',
-                    timeout: 30000
+                    timeout: this.curlTimeout
                 });
                 if (result != null) retryFlag = false;
             } catch (e) {

@@ -13,7 +13,7 @@ class IpfsService extends Service {
         super(ctx);
         this.retryNum = 10;
         this.retryTimeout = 1500;
-        this.saveToCheveretoTimeout = 30000;
+        this.curlTimeout = 30000;
         this.ipfs = null;
     }
 
@@ -28,7 +28,10 @@ class IpfsService extends Service {
 
         if (!fs.existsSync(saveDirPath)) fs.mkdirSync(saveDirPath);
 
-        const result = await app.curl(url);
+        const result = await app.curl(url, {
+            dataType: 'json',
+            timeout: this.curlTimeout
+        });
         let fileData = result.data;
         let hash = '';
         try {
@@ -81,7 +84,7 @@ class IpfsService extends Service {
 
                 const result = await app.curl(apiSaveURL, {
                     dataType: 'json',
-                    timeout: this.saveToCheveretoTimeout
+                    timeout: this.curlTimeout
                 });
                 let jsonData = result.data;
                 if (jsonData.success) {
