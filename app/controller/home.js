@@ -156,6 +156,7 @@ class HomeController extends Controller {
                 category: category,
                 pwg_token: token,
                 name: "o4wz6hm1dqzkfl3nr09.jpg",
+                source:piwigoConfig.testUrl
                 // file: fs.createReadStream(filePath)
             },
             files: filePath,
