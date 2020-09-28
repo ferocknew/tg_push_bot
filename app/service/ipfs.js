@@ -54,7 +54,8 @@ class IpfsService extends Service {
         returnUrl = `${httpTop}${uri}`;
         try {
             // this.saveToCheveretoAPI(uri);
-            ctx.service.piwigo.uploadImg(saveFilePath);
+            // ctx.service.piwigo.uploadImg(saveFilePath);
+            ctx.service.piwigo.uploadImgFromUrl(returnUrl);
 
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
