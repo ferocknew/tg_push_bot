@@ -6,6 +6,7 @@ class PiwigoService extends Service {
         super(ctx);
         this.token = "";
         this.url = "";
+        this.cookie = "";
         this.timeout = 120000;
     }
 
@@ -43,7 +44,9 @@ class PiwigoService extends Service {
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
         });
-        return res.data.result.pwg_token;
+        this.token = res.data.result.pwg_token;
+        this.cookie = cookie.join("");
+        return this.token;
     }
 
     async uploadImg(filePath) {
@@ -107,6 +110,9 @@ class PiwigoService extends Service {
                 pwg_token: token,
                 name: "o4wz6hm1dqzkfl3nr09.jpg",
                 source: url
+            },
+            headers: {
+                'Cookie': this.cookie
             },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
             dataType: 'json',
