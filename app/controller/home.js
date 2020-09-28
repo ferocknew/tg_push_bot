@@ -108,7 +108,7 @@ class HomeController extends Controller {
         // let q = ctx.query;
         //
         // //
-        // let piwigoConfig = app.config.piwigo;
+        let piwigoConfig = app.config.piwigo;
         let url = piwigoConfig.url;
         const result = await ctx.curl(url, {
             // 必须指定 method
