@@ -155,7 +155,7 @@ class PiwigoService extends Service {
                 'Cookie': cookie.join("")
             },
             // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
-            dataType: 'text',
+            dataType: 'json',
             timeout: 120000,
         });
         // res = await ctx.curl(url, {
@@ -166,7 +166,13 @@ class PiwigoService extends Service {
         //
         //     },
         // }
-        ctx.logger.info('PiwigoService.uploadImgFromUrl  || getListRes.data = %j', getListRes.data);
+        let picRes = getListRes.data;
+        if (picRes.stat == 'ok') {
+            ctx.logger.info('PiwigoService.uploadImgFromUrl  || picRes.result = %j', picRes.result);
+        } else {
+            ctx.logger.info('PiwigoService.uploadImgFromUrl  || 上传失败！！！！ picRes = %j', picRes);
+        }
+        return;
     }
 }
 
