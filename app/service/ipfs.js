@@ -57,7 +57,7 @@ class IpfsService extends Service {
         try {
             // this.saveToCheveretoAPI(uri);
             // ctx.service.piwigo.uploadImg(saveFilePath);
-            ctx.service.piwigo.uploadImgFromUrl(uri);
+            ctx.service.piwigo.uploadImgFromUrl(uri, `${fileName}${extname}`);
 
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
