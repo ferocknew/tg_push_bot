@@ -175,7 +175,7 @@ class HomeController extends Controller {
         //     },
         // }
         ctx.body = getListRes.data;
-        ctx.body = '';
+        // ctx.body = '';
         return;
     }
 
