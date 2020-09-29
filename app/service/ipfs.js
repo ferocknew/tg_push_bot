@@ -22,7 +22,7 @@ class IpfsService extends Service {
         let returnUrl = "ok";
 
         let extname = path.extname(url);
-        let fileName = uniqid();
+        let fileName = uniqid() + '_' + new Date().getTime();
         let saveDirPath = `/tmp/${fileName}_1`;
         let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
@@ -83,7 +83,7 @@ class IpfsService extends Service {
                 ctx.logger.info('IpfsService.saveToCheveretoAPI || saveToChevereto 请求地址, apiSaveURL = %j', apiSaveURL);
 
                 const result = await app.curl(apiSaveURL, {
-                    dataType: 'json',
+                    dataType: 'text',
                     timeout: this.curlTimeout
                 });
                 let jsonData = result.data;
