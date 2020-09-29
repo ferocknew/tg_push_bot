@@ -23,7 +23,7 @@ class IpfsService extends Service {
 
         let extname = path.extname(url);
         // let fileName = uniqid();
-        let fileName = new Date().getTime();
+        let fileName = new Date().getTime() + "_" + _.random(0, 9);
         let saveDirPath = `/tmp/${fileName}_1`;
         let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
