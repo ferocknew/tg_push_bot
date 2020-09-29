@@ -56,9 +56,9 @@ class IpfsService extends Service {
         let uri = `/ipfs/${hash}/${fileName}${extname}`;
         returnUrl = `${httpTop}${uri}`;
         try {
-            // this.saveToCheveretoAPI(uri);
+            this.saveToCheveretoAPI(uri);
             // ctx.service.piwigo.uploadImg(saveFilePath);
-            ctx.service.piwigo.uploadImgFromUrl(uri, `${fileName}${extname}`);
+            // ctx.service.piwigo.uploadImgFromUrl(uri, `${fileName}${extname}`);
 
         } catch (e) {
             ctx.logger.warn('IpfsService.saveUrl || e = %j', e);
@@ -75,7 +75,7 @@ class IpfsService extends Service {
         let host = cheveretoConfig.host;
         let apiKey = cheveretoConfig.apiKey;
         let ownHost = cheveretoConfig.ownHost;
-        let apiSaveURL = `${host}/api/1/upload/?key=${apiKey}&source=${ownHost}${uri}&format=json`;
+        let apiSaveURL = `${host}/tg.api.php?key=${apiKey}&source=${ownHost}${uri}&format=json`;
 
         let retryFlag = true;
         for (var i = 0; i < this.retryNum; i++) {
