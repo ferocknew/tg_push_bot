@@ -7,9 +7,8 @@ class HomeController extends Controller {
         let p = ctx.params;
         let q = ctx.query;
 
-        ctx.logger.info('HomeController.index || p= %j', p);
-        ctx.logger.info('HomeController.index || q= %j', q);
-
+        let pathValue = q['s'] || null;
+        ctx.logger.info('HomeController.index || pathValue= %j', pathValue);
 
         let htmlData = {};
         htmlData['title'] = "demo";
