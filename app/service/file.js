@@ -36,7 +36,7 @@ class FileService extends Service {
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
             ctx.logger.info('FileService.getList || fileFlag= %j', fileFlag);
             returnObj['name'] = item;
-            returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime'], "YYYY-MM-DD HH:mm:ss");
+            returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
             returnObj['size'] = fsInfo.size;
             if (fileFlag) returnObj['folder'] = false;
             returnObj['extname'] = path.extname(item);
