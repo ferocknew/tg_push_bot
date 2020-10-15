@@ -20,7 +20,7 @@ class FileService extends Service {
         let res = fs.readdirSync(filePath);
         // ctx.logger.info('FileService.getList || res= %j', res);
 
-        for (let item in res) {
+        for (let item of res) {
             let fsInfo = fs.statSync(path.join(filePath, item));
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
         }
