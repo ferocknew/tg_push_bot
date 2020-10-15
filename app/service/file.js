@@ -13,8 +13,8 @@ class FileService extends Service {
      */
     async getList(pathValue) {
         const {ctx, app} = this;
-        let config = app.config;
-        ctx.logger.info('FileService.getList || config= %j', config);
+        let filePath = path.join(app.config.baseDir, pathValue);
+        ctx.logger.info('FileService.getList || filePath= %j', filePath);
 
     }
 
