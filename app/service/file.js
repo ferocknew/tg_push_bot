@@ -8,6 +8,16 @@ class FileService extends Service {
         super(ctx);
     }
 
+    /**
+     * 获取列表
+     */
+    async getList(pathValue) {
+        const {ctx, app} = this;
+        let config = app.confg;
+        ctx.logger.info('FileService.getList || config= %j', config);
+
+    }
+
 }
 
 module.exports = FileService;

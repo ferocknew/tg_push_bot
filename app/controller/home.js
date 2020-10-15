@@ -7,8 +7,9 @@ class HomeController extends Controller {
         let p = ctx.params;
         let q = ctx.query;
 
-        let pathValue = q['s'] || "/";
+        const pathValue = q['s'] || "/";
         ctx.logger.info('HomeController.index || pathValue= %j', pathValue);
+        await ctx.service.file.getList(pathValue);
 
         let htmlData = {};
         htmlData['title'] = "demo";
