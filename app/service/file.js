@@ -17,6 +17,8 @@ class FileService extends Service {
         let filePath = path.join(app.config.baseDir, pathValue);
         ctx.logger.info('FileService.getList || filePath= %j', filePath);
 
+        let res = fs.readdirSync(filePath);
+        ctx.logger.info('FileService.getList || res= %j', res);
     }
 
 }
