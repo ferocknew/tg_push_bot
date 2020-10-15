@@ -8,7 +8,9 @@ class HomeController extends Controller {
         // const userInfo = await ctx.service.user.find(userId);
         // ctx.logger.info('some request data: %j', userInfo);
         // ctx.body = '';
-        await ctx.render('nexmoe/layout.html');
+        let htmlData = {};
+        htmlData['title'] = "demo";
+        ctx.body = await ctx.renderView('nexmoe/layout.html', htmlData);
         return;
     }
 
