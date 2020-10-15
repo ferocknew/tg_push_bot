@@ -1,4 +1,4 @@
-<?php view::layout('layout')?>
+<!--<?php view::layout('layout')?>-->
 <?php
     function isImage($filename){
       $types = '/(\.jpg$|\.png$|\.jpeg$)/i';
@@ -25,14 +25,14 @@ function file_ico($item){
 }
 ?>
 
-<?php view::begin('content');?>
+<!--<?php view::begin('content');?>-->
 
 <div class="mdui-container-fluid">
-    <?php if($head):?>
+<!--    <?php if($head):?>-->
     <div class="mdui-typo" style="padding: 20px;">
-        <?php e($head);?>
+<!--        <?php e($head);?>-->$head
     </div>
-    <?php endif;?>
+<!--    <?php endif;?>-->
     <style>
         .thumb .th{
             display: none;
