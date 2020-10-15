@@ -4,10 +4,13 @@ const fs = require('fs');
 class HomeController extends Controller {
     async index() {
         const {ctx, app} = this;
-        // let userId = 11;
-        // const userInfo = await ctx.service.user.find(userId);
-        // ctx.logger.info('some request data: %j', userInfo);
-        // ctx.body = '';
+        let p = ctx.params;
+        let q = ctx.query;
+
+        ctx.logger.info('HomeController.index || p= %j', p);
+        ctx.logger.info('HomeController.index || q= %j', p);
+
+
         let htmlData = {};
         htmlData['title'] = "demo";
         // htmlData['list'] = await ctx.renderView('nexmoe/list.html', {});
@@ -180,6 +183,11 @@ class HomeController extends Controller {
         // //     },
         // // }
         // ctx.body = getListRes.data;
+
+        // let userId = 11;
+        // const userInfo = await ctx.service.user.find(userId);
+        // ctx.logger.info('some request data: %j', userInfo);
+        // ctx.body = '';
         ctx.body = '';
         return;
     }
