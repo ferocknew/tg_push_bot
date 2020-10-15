@@ -27,7 +27,8 @@ class FileService extends Service {
         returnObj['lastModifiedDateTime'] = '';
         returnObj['size'] = '';
         returnObj['fileType'] = '';
-        returnObj['extname'] = path.extname(returnObj['name']);
+        returnObj['extname'] = '';
+        returnObj['folder'] = true;
 
         for (let item of res) {
             let fsInfo = fs.statSync(path.join(filePath, item));
@@ -36,8 +37,12 @@ class FileService extends Service {
             ctx.logger.info('FileService.getList || fileFlag= %j', fileFlag);
             returnObj['name'] = item;
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtimeMs'], "YYYY-MM-DD HH:mm");
-            ;
+            returnObj['size'] = fsInfo.size;
+            if (fileFlag) returnObj['folder'] = false;
+            returnObj['extname'] = path.extname(item);
 
+            ctx.logger.info('FileService.getList || returnObj= %j', returnObj);
+            returnData.push(returnObj);
         }
 
         return returnData;
