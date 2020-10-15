@@ -18,7 +18,40 @@ class FileService extends Service {
         ctx.logger.info('FileService.getList || filePath= %j', filePath);
 
         let res = fs.readdirSync(filePath);
-        ctx.logger.info('FileService.getList || res= %j', res);
+        // ctx.logger.info('FileService.getList || res= %j', res);
+
+        for (let item in res) {
+            let fsInfo = fs.statSync(item);
+            ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
+        }
+
+        let returnData = [];
+        let returnObj = {};
+        returnObj['name'] = '';
+        returnObj['lastModifiedDateTime'] = '';
+        returnObj['size'] = '';
+        returnObj['fileType'] = '';
+        returnObj['extname'] = path.extname(returnObj['name']);
+
+        return returnData;
+    }
+
+    async getFileType(fileName) {
+        /*
+        function file_ico($item){
+  $ext = strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));
+  if(in_array($ext,['bmp','jpg','jpeg','png','gif','webp'])){
+  	return "image";
+  }
+  if(in_array($ext,['mp4','mkv','webm','avi','mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'mkv', 'asf', 'flv', 'm3u8'])){
+  	return "ondemand_video";
+  }
+  if(in_array($ext,['ogg','mp3','wav','flac','aac','m4a','ape'])){
+  	return "audiotrack";
+  }
+  return "insert_drive_file";
+}
+         */
     }
 
 }

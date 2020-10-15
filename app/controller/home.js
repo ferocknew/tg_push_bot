@@ -9,11 +9,12 @@ class HomeController extends Controller {
 
         const pathValue = q['s'] || "/";
         ctx.logger.info('HomeController.index || pathValue= %j', pathValue);
-        await ctx.service.file.getList(pathValue);
+        let items = await ctx.service.file.getList(pathValue);
 
         let htmlData = {};
         htmlData['title'] = "demo";
         htmlData['path'] = pathValue;
+        htmlData['items'] = items;
         // htmlData['list'] = await ctx.renderView('nexmoe/list.html', {});
         ctx.body = await ctx.renderView('nexmoe/layout.html', htmlData);
         return;
