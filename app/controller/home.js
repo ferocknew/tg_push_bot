@@ -7,11 +7,12 @@ class HomeController extends Controller {
         let p = ctx.params;
         let q = ctx.query;
 
-        let pathValue = q['s'] || null;
+        let pathValue = q['s'] || "/";
         ctx.logger.info('HomeController.index || pathValue= %j', pathValue);
 
         let htmlData = {};
         htmlData['title'] = "demo";
+        htmlData['path'] = pathValue;
         // htmlData['list'] = await ctx.renderView('nexmoe/list.html', {});
         ctx.body = await ctx.renderView('nexmoe/layout.html', htmlData);
         return;
