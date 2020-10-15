@@ -151,10 +151,10 @@
               mdui-drawer="{target: '#main-drawer', swipe: true}" mdui-tooltip="{content: '菜单'}"><i
                 class="mdui-icon material-icons">menu</i></span>
         <a href="/" class="mdui-typo-headline">{{ title }}</a>
-<!--        <?php foreach((array)$navs as $n=>$l):?>-->
+        <!--        <?php foreach((array)$navs as $n=>$l):?>-->
         <i class="mdui-icon material-icons mdui-icon-dark" style="margin:0;">chevron_right</i>
         <a href="#">路径</a>
-<!--        <?php endforeach;?>-->
+        <!--        <?php endforeach;?>-->
         <div class="mdui-toolbar-spacer"></div>
         <a href="javascript:thumb();" id="thumb" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '切换显示'}"><i
                 class="mdui-icon material-icons">format_list_bulleted</i></a>
@@ -166,20 +166,21 @@
         <a href="javascript:;"><img src="<?php e(config('drawer_img'));?>"/></a>
         <div class="mdui-grid-tile-actions mdui-grid-tile-actions-gradient">
             <div class="mdui-grid-tile-text">
-                <div class="mdui-grid-tile-title"><?php e($title.' - '.config('site_name'));?></div>
+                <div class="mdui-grid-tile-title">{{ title }}</div>
                 <div class="mdui-grid-tile-subtitle">Onedrive</div>
             </div>
         </div>
     </div>
     <div class="mdui-list" mdui-collapse="{accordion: true}">
-        <?php e(config('drawer'));?>
+<!--        <?php e(config('drawer'));?>-->
+        侧边
     </div>
 </div>
 
 
 <div class="mdui-container">
     <div class="mdui-container-fluid"></div>
-    <?php view::section('content');?>
+    {{ list }}
 </div>
 </body>
 </html>
