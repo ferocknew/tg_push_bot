@@ -150,11 +150,11 @@
         <span class="mdui-btn  mdui-typo-headline mdui-btn-icon mdui-ripple mdui-ripple-white"
               mdui-drawer="{target: '#main-drawer', swipe: true}" mdui-tooltip="{content: '菜单'}"><i
                 class="mdui-icon material-icons">menu</i></span>
-        <a href="/" class="mdui-typo-headline"><?php e(config('site_name'));?></a>
-        <?php foreach((array)$navs as $n=>$l):?>
+        <a href="/" class="mdui-typo-headline">{{ title }}</a>
+<!--        <?php foreach((array)$navs as $n=>$l):?>-->
         <i class="mdui-icon material-icons mdui-icon-dark" style="margin:0;">chevron_right</i>
-        <a href="<?php e($l);?>"><?php e($n);?></a>
-        <?php endforeach;?>
+        <a href="#">路径</a>
+<!--        <?php endforeach;?>-->
         <div class="mdui-toolbar-spacer"></div>
         <a href="javascript:thumb();" id="thumb" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '切换显示'}"><i
                 class="mdui-icon material-icons">format_list_bulleted</i></a>
