@@ -21,7 +21,7 @@ class FileService extends Service {
         // ctx.logger.info('FileService.getList || res= %j', res);
 
         for (let item in res) {
-            let fsInfo = fs.statSync(item);
+            let fsInfo = fs.statSync(path.join(filePath, item));
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
         }
 
