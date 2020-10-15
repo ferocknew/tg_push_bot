@@ -1,6 +1,7 @@
 const Service = require('egg').Service;
 const _ = require('lodash');
 const fs = require('fs');
+const moment = require('moment');
 const path = require('path');
 
 class FileService extends Service {
@@ -20,11 +21,6 @@ class FileService extends Service {
         let res = fs.readdirSync(filePath);
         // ctx.logger.info('FileService.getList || res= %j', res);
 
-        for (let item of res) {
-            let fsInfo = fs.statSync(path.join(filePath, item));
-            ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
-        }
-
         let returnData = [];
         let returnObj = {};
         returnObj['name'] = '';
@@ -32,6 +28,17 @@ class FileService extends Service {
         returnObj['size'] = '';
         returnObj['fileType'] = '';
         returnObj['extname'] = path.extname(returnObj['name']);
+
+        for (let item of res) {
+            let fsInfo = fs.statSync(path.join(filePath, item));
+            let fileFlag = fsInfo.isFile();
+            ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
+            ctx.logger.info('FileService.getList || fileFlag= %j', fileFlag);
+            returnObj['name'] = item;
+            returnObj['lastModifiedDateTime'] = moment(fsInfo['mtimeMs'], "YYYY-MM-DD HH:mm");
+            ;
+
+        }
 
         return returnData;
     }
