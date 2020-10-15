@@ -13,6 +13,12 @@ module.exports = {
         help: "帮助列表",
         ipfsOpen: "打开当前会话的 ipfs 保存功能。"
     },
+    view: {
+        defaultViewEngine: 'nunjucks',
+        mapping: {
+            '.nj': 'nunjucks',
+        },
+    },
     ipfs: {
         address: "/ip4/127.0.0.1/tcp/5001"
     }
