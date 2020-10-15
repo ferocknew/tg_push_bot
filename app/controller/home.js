@@ -7,7 +7,9 @@ class HomeController extends Controller {
         // let userId = 11;
         // const userInfo = await ctx.service.user.find(userId);
         // ctx.logger.info('some request data: %j', userInfo);
-        ctx.body = '';
+        // ctx.body = '';
+        await ctx.render('home.nj');
+        return;
     }
 
     async inlineQuery() {
