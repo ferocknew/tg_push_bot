@@ -16,7 +16,7 @@ module.exports = {
     view: {
         defaultViewEngine: 'nunjucks',
         mapping: {
-            '.nj': 'nunjucks',
+            '.html': 'nunjucks',
         },
     },
     ipfs: {
