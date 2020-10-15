@@ -10,7 +10,7 @@ class HomeController extends Controller {
         // ctx.body = '';
         let htmlData = {};
         htmlData['title'] = "demo";
-        htmlData['list'] = await ctx.renderView('nexmoe/list.html', {});
+        // htmlData['list'] = await ctx.renderView('nexmoe/list.html', {});
         ctx.body = await ctx.renderView('nexmoe/layout.html', htmlData);
         return;
     }
