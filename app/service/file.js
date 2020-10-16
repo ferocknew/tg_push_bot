@@ -22,23 +22,16 @@ class FileService extends Service {
         // ctx.logger.info('FileService.getList || res= %j', res);
 
         let returnData = [];
-        let returnObj = {};
-        returnObj['name'] = '';
-        returnObj['lastModifiedDateTime'] = '';
-        returnObj['size'] = '';
-        returnObj['fileType'] = '';
-        returnObj['extname'] = '';
-        returnObj['folder'] = true;
-
         for (let item of res) {
             let fsInfo = fs.statSync(path.join(filePath, item));
             let fileFlag = fsInfo.isFile();
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
             ctx.logger.info('FileService.getList || fileFlag= %j', fileFlag);
+            let returnObj = {};
             returnObj['name'] = item;
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
             returnObj['size'] = fsInfo.size;
-            if (fileFlag) returnObj['folder'] = false;
+            returnObj['folder'] = (fileFlag) ? false : true;
             returnObj['extname'] = path.extname(item).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
 
