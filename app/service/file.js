@@ -23,9 +23,13 @@ class FileService extends Service {
 
         let returnData = [];
         for (let item of res) {
-            let fsInfo = fs.statSync(path.join(filePath, item));
+            let fileBasePath = path.join(filePath, item);
+            let fsInfo = fs.statSync(fileBasePath);
             let fileFlag = fsInfo.isFile();
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
+            let ipfsInfo = '';
+            if (path.extname(item) == ".ipfs") ipfsInfo = fs.readFileSync(fileBasePath, 'utf8');
+            ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
 
             let returnObj = {};
             returnObj['name'] = item.replace(".ipfs", "");
