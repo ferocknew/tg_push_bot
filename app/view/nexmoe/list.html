@@ -198,13 +198,13 @@
             $$(this).on('click', function () {
                 layer.open({
                     type: 2,
-                    title: '<a target="_blank" href="' + $$(this).attr('href') + '">' + $$(this).find('span').text() + '(点击新窗口打开)</a>', //jia,
+                    title: '<a target="_blank" href="' + $$(this).attr('href') + '?s">' + $$(this).find('span').text() + '(点击新窗口打开)</a>', //jia,
                     //shadeClose: true,
                     move: false,
                     shade: false,
                     maxmin: true,
                     area: ['100%', '100%'],
-                    content: $$(this).attr('href') //le
+                    content: $$(this).attr('href') + "?s" //le
                     , min: function (layero) {
                         //zi;
                         layero.css({top: '90%'})
@@ -387,4 +387,4 @@
     });
 
 </script>
-<?php view::end('content');?>
+<!--<?php view::end('content');?>-->
