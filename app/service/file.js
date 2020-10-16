@@ -52,7 +52,7 @@ class FileService extends Service {
                 }
                 let ipfsType = ipfsInfo['type'];
                 let cid = ipfsInfo['cid'];
-                let indexInfo = ipfsInfo['index'];
+                let indexInfo = encodeURI(ipfsInfo['index']);
                 ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
 
 
