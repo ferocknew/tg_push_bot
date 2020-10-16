@@ -41,10 +41,10 @@ class FileService extends Service {
             if (fileFlag) returnObj['folder'] = false;
             returnObj['extname'] = path.extname(item);
 
-            ctx.logger.info('FileService.getList || returnObj= %j', returnObj);
             returnData.push(returnObj);
         }
 
+        ctx.logger.info('FileService.getList || returnData= %j', returnData);
         return returnData;
     }
 
