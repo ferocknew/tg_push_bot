@@ -36,7 +36,7 @@ class FileService extends Service {
             let returnObj = {};
             returnObj['name'] = item.replace(".ipfs", "");
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
-            returnObj['size'] = this.renderSize(fsInfo.size);
+            returnObj['size'] = await this.renderSize(fsInfo.size);
             returnObj['folder'] = (fileFlag) ? false : true;
             returnObj['extname'] = path.extname(returnObj['name']).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
@@ -99,7 +99,7 @@ class FileService extends Service {
         return returnStr;
     }
 
-    async renderSize(filesize) {
+    async renderSize(value) {
         if (null == value || value == '') {
             return "0 Bytes";
         }
