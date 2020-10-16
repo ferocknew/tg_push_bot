@@ -20,6 +20,21 @@ class HomeController extends Controller {
         return;
     }
 
+    async dplay() {
+        const {ctx, app} = this;
+        let p = ctx.params;
+        let q = ctx.query;
+
+        const m3u8Url = q['s'] || null;
+        if (m3u8Url == null) {
+            ctx.body = "";
+            return;
+        }
+        ctx.body = await ctx.renderView('dplay.html', {"m3u8Url": m3u8Url});
+        return;
+
+    }
+
     async inlineQuery() {
         const {ctx, app} = this;
         let p = ctx.params;

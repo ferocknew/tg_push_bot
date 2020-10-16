@@ -1,0 +1,23 @@
+<div id="dplayer"></div>
+<script src="//cdn.jsdelivr.net/npm/hls.js/dist/hls.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+<div style="display: none" id="m3u8Url">{{ m3u8Url }}</div>
+<script>
+    $(function () {
+        var m3u8Url = $("#m3u8Url").text();
+        const dp = new DPlayer({
+            container: document.getElementById('dplayer'),
+            video: {
+                url: m3u8Url,
+                type: 'hls',
+            },
+            pluginOptions: {
+                hls: {
+                    // hls config
+                },
+            },
+        });
+        console.log(dp.plugins.hls); // Hls 实例
+    })();
+</script>
