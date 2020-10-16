@@ -52,6 +52,7 @@ class FileService extends Service {
                 }
                 let ipfsType = ipfsInfo['type'];
                 let cid = ipfsInfo['cid'];
+                let cover = ipfsInfo['cover'] || false;
                 let indexInfo = encodeURI(ipfsInfo['index']);
                 ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
 
@@ -64,6 +65,7 @@ class FileService extends Service {
                         returnObj['href'] = `${httpTop}/ipfs/${cid}/${indexInfo}`;
                         break;
                 }
+                returnObj['cover'] = (cover) ? `${httpTop}/ipfs/${cid}/cover.jpg` : "#";
             }
 
             ctx.logger.info('FileService.getList || returnObj= %j', returnObj);
