@@ -132,7 +132,12 @@
                     {% endif %}
                     data-name="{{ item.name }}"
                     data-readypreview="{{ item.extname }}"
-                    href="{{ item.href }}" target="_blank">
+                    href="{{ item.href }}" target="_blank"
+
+                    {% if item.ico== "ondemand_video" %}
+                    cover = "{{ item.cover }}"
+                    {% endif %}
+                    >
                     {% if item.isImage and (imageMode == "1") %}
                     <img class="mdui-img-fluid"
                          src="{{ item.href }}">
@@ -322,9 +327,13 @@
             $('.mdui-col-xs-12 i.mdui-icon').each(function () {
                 if ($(this).text() == "image" || $(this).text() == "ondemand_video") {
                     var href = $(this).parent().parent().attr('href');
+                    var cover = $(this).parent().parent().attr('cover');
                     var thumb = (href.indexOf('?') == -1) ? '?t=220' : '&t=220';
                     $(this).hide();
                     $(this).parent().parent().parent().css("background", "url(" + href + thumb + ")  no-repeat center top");
+                    if ($(this).text() == "ondemand_video") {
+                        $(this).parent().parent().parent().css("background", "url(" + cover + thumb + ")  no-repeat center top");
+                    }
                 }
             });
         }
