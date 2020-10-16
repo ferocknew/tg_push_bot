@@ -34,6 +34,7 @@ class FileService extends Service {
             returnObj['folder'] = (fileFlag) ? false : true;
             returnObj['extname'] = path.extname(returnObj['name']).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
+            returnObj['isImage'] = (returnObj['ico'] == 'image') ? true : false;
 
             returnData.push(returnObj);
         }
