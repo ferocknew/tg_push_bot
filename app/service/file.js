@@ -19,6 +19,7 @@ class FileService extends Service {
         ctx.logger.info('FileService.getList || filePath= %j', filePath);
 
         let res = fs.readdirSync(filePath);
+        let ipfsUrl = app.config.ipfsUrl;
         // ctx.logger.info('FileService.getList || res= %j', res);
 
         let returnData = [];
@@ -31,16 +32,6 @@ class FileService extends Service {
             let ipfsFlag = false;
             if (path.extname(item) == ".ipfs") ipfsFlag = true;
 
-            if (ipfsFlag) {
-                ipfsInfo = fs.readFileSync(fileBasePath, 'utf8');
-                try {
-                    ipfsInfo = JSON.parse(ipfsInfo);
-                } catch (e) {
-                    ipfsInfo = {};
-                }
-                ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
-            }
-
 
             let returnObj = {};
             returnObj['name'] = item.replace(".ipfs", "");
@@ -50,8 +41,32 @@ class FileService extends Service {
             returnObj['extname'] = path.extname(returnObj['name']).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
             returnObj['isImage'] = (returnObj['ico'] == 'image') ? true : false;
-            ctx.logger.info('FileService.getList || returnObj= %j', returnObj);
+            returnObj['href'] = '#';
 
+            if (ipfsFlag) {
+                ipfsInfo = fs.readFileSync(fileBasePath, 'utf8');
+                try {
+                    ipfsInfo = JSON.parse(ipfsInfo);
+                } catch (e) {
+                    ipfsInfo = {};
+                }
+                let ipfsType = ipfsInfo['type'];
+                let cid = ipfsInfo['cid'];
+                let indexInfo = ipfsInfo['index'];
+                ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
+
+
+                let urlObj = ipfsUrl[_.random(0, ipfsUrl.length - 1)];
+                let httpTop = urlObj['httpTop'];
+
+                switch (ipfsType) {
+                    case "directory":
+                        returnObj['href'] = `${httpTop}/ipfs/${cid}/${indexInfo}`;
+                        break;
+                }
+            }
+
+            ctx.logger.info('FileService.getList || returnObj= %j', returnObj);
             returnData.push(returnObj);
         }
 
