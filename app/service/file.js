@@ -66,6 +66,7 @@ class FileService extends Service {
                         break;
                 }
                 returnObj['cover'] = (cover) ? `${httpTop}/ipfs/${cid}/cover.jpg` : "#";
+                returnObj['dir'] = `${httpTop}/ipfs/${cid}/`;
             }
 
             ctx.logger.info('FileService.getList || returnObj= %j', returnObj);

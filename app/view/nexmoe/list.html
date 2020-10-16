@@ -152,7 +152,13 @@
                     </a>
 
                     <div class="forcedownload ">
-                        <a title="直接下载" href="{{ item.href }}" target="_blank">
+                        <a title="直接下载"
+                        {% if item.ico == "ondemand_video" %}
+                            href="{{ item.dir }}"
+                        {% else %}
+                           href="{{ item.href }}"
+                        {% endif %}
+                        target="_blank">
                             <button class="mdui-btn mdui-ripple mdui-btn-icon"><i class="mdui-icon material-icons">file_download</i>
                             </button>
                         </a>
