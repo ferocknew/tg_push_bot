@@ -28,11 +28,11 @@ class FileService extends Service {
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
             ctx.logger.info('FileService.getList || fileFlag= %j', fileFlag);
             let returnObj = {};
-            returnObj['name'] = item;
+            returnObj['name'] = item.replace(".ipfs", "");
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
             returnObj['size'] = fsInfo.size;
             returnObj['folder'] = (fileFlag) ? false : true;
-            returnObj['extname'] = path.extname(item).toLowerCase();
+            returnObj['extname'] = path.extname(returnObj['name']).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
 
             returnData.push(returnObj);
