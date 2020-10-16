@@ -102,8 +102,8 @@
                 </li>
                 {% endif %}
                 {% for item in items %}
-<!--                <?php foreach((array)$items as $item):?>-->
-<!--                <?php if(!empty($item['folder'])):?>-->
+                <!--                <?php foreach((array)$items as $item):?>-->
+                <!--                <?php if(!empty($item['folder'])):?>-->
                 {% if item.folder %}
                 <li class="mdui-list-item mdui-ripple" data-sort data-sort-name="<?php e($item['name']);?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
@@ -121,15 +121,15 @@
                 <li class="mdui-list-item file mdui-ripple" data-sort data-sort-name="{{ item.name }}"
                     data-sort-date="{{ item.lastModifiedDateTime }}"
                     data-sort-size="{{ item.size }}">
-                    <a {% if item.ico == "image" %}
+                    <a {% if item.ico== "image" %}
                     class="glightbox"
-                       {% elseif item.ico == "ondemand_video" %}
+                    {% elseif item.ico == "ondemand_video" %}
                     class="iframe"
-                       {% elseif item.ico == "audiotrack" %}
+                    {% elseif item.ico == "audiotrack" %}
                     class="audio"
-                       {% elseif item.ico == "insert_drive_file" %}
+                    {% elseif item.ico == "insert_drive_file" %}
                     class="dl"
-                        {% endif %}
+                    {% endif %}
                     data-name="{{ item.name }}"
                     data-readypreview="{{ item.extname }}"
                     href="{{ item.href }}" target="_blank">
@@ -198,13 +198,13 @@
             $$(this).on('click', function () {
                 layer.open({
                     type: 2,
-                    title: '<a target="_blank" href="' + $$(this).attr('href') + "<?php echo ((config('root_path') == '?')?'&s':'?s'); ?>" + '">' + $$(this).find('span').text() + '(点击新窗口打开)</a>', //jia,
+                    title: '<a target="_blank" href="' + $$(this).attr('href') + '">' + $$(this).find('span').text() + '(点击新窗口打开)</a>', //jia,
                     //shadeClose: true,
                     move: false,
                     shade: false,
                     maxmin: true,
                     area: ['100%', '100%'],
-                    content: $$(this).attr('href') + "<?php echo ((config('root_path') == '?')?'&s':'?s'); ?>" //le
+                    content: $$(this).attr('href') //le
                     , min: function (layero) {
                         //zi;
                         layero.css({top: '90%'})
