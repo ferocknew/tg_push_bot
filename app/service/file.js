@@ -45,6 +45,7 @@ class FileService extends Service {
     }
 
     async getFileType(extname) {
+        extname = extname.replace(".", "");
         let imgArray = ['bmp', 'jpg', 'jpeg', 'png', 'gif', 'webp'];
         let videoArray = ['mp4', 'mkv', 'webm', 'avi', 'mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'mkv', 'asf', 'flv', 'm3u8'];
         let muiscArray = ['ogg', 'mp3', 'wav', 'flac', 'aac', 'm4a', 'ape'];
