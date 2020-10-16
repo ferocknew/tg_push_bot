@@ -132,24 +132,22 @@
                         {% endif %}
                     data-name="{{ item.name }}"
                     data-readypreview="{{ item.extname }}"
-                    href="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']);?>" target="_blank">
+                    href="{{ item.href }}" target="_blank">
                     {% if item.isImage and (imageMode == "1") %}
                     <img class="mdui-img-fluid"
-                         src="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']); ?>">
+                         src="{{ item.href }}">
                     {% else %}
                     <div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
                         <i class="mdui-icon material-icons">{{ item.ico }}</i>
                         <span>{{ item.name }}</span>
                     </div>
-                    <div class="mdui-col-sm-3 mdui-text-right"><?php echo date("Y-m-d H:i:s", $item['lastModifiedDateTime']);?></div>
-                    <div class="mdui-col-sm-2 mdui-text-right"><?php echo onedrive::human_filesize($item['size']);?>
-
-                    </div>
+                    <div class="mdui-col-sm-3 mdui-text-right">{{ item.lastModifiedDateTime }}</div>
+                    <div class="mdui-col-sm-2 mdui-text-right">{{ item.size }}</div>
                     {% endif %}
                     </a>
 
                     <div class="forcedownload ">
-                        <a title="直接下载" href="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']);?>">
+                        <a title="直接下载" href="{{ item.href }}">
                             <button class="mdui-btn mdui-ripple mdui-btn-icon"><i class="mdui-icon material-icons">file_download</i>
                             </button>
                         </a>

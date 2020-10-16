@@ -36,7 +36,7 @@ class FileService extends Service {
             let returnObj = {};
             returnObj['name'] = item.replace(".ipfs", "");
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
-            returnObj['size'] = fsInfo.size;
+            returnObj['size'] = this.renderSize(fsInfo.size);
             returnObj['folder'] = (fileFlag) ? false : true;
             returnObj['extname'] = path.extname(returnObj['name']).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
@@ -97,23 +97,19 @@ class FileService extends Service {
         }
 
         return returnStr;
-        // if (imgArray.indexOf(extname) != -1) return "image";
+    }
 
-        /*
-        function file_ico($item){
-  $ext = strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));
-  if(in_array($ext,)){
-  	return "image";
-  }
-  if(in_array($ext,)){
-  	return "ondemand_video";
-  }
-  if(in_array($ext,)){
-  	return "audiotrack";
-  }
-  return "insert_drive_file";
-}
-         */
+    async renderSize(filesize) {
+        if (null == value || value == '') {
+            return "0 Bytes";
+        }
+        var unitArr = new Array("Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
+        var index = 0;
+        var srcsize = parseFloat(value);
+        index = Math.floor(Math.log(srcsize) / Math.log(1024));
+        var size = srcsize / Math.pow(1024, index);
+        size = size.toFixed(2);//保留的小数位数
+        return size + unitArr[index];
     }
 
 }
