@@ -28,8 +28,19 @@ class FileService extends Service {
             let fileFlag = fsInfo.isFile();
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
             let ipfsInfo = '';
-            if (path.extname(item) == ".ipfs") ipfsInfo = fs.readFileSync(fileBasePath, 'utf8');
-            ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
+            let ipfsFlag = false;
+            if (path.extname(item) == ".ipfs") ipfsFlag = true;
+
+            if (ipfsFlag) {
+                ipfsInfo = fs.readFileSync(fileBasePath, 'utf8');
+                try {
+                    ipfsInfo = JSON.parse(ipfsInfo);
+                } catch (e) {
+                    ipfsInfo = {};
+                }
+                ctx.logger.info('FileService.getList || ipfsInfo= %j', ipfsInfo);
+            }
+
 
             let returnObj = {};
             returnObj['name'] = item.replace(".ipfs", "");
