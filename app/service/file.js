@@ -26,7 +26,7 @@ class FileService extends Service {
             let fsInfo = fs.statSync(path.join(filePath, item));
             let fileFlag = fsInfo.isFile();
             ctx.logger.info('FileService.getList || fsInfo= %j', fsInfo);
-            ctx.logger.info('FileService.getList || fileFlag= %j', fileFlag);
+
             let returnObj = {};
             returnObj['name'] = item.replace(".ipfs", "");
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
@@ -35,6 +35,7 @@ class FileService extends Service {
             returnObj['extname'] = path.extname(returnObj['name']).toLowerCase();
             returnObj['ico'] = await this.getFileType(returnObj['extname']);
             returnObj['isImage'] = (returnObj['ico'] == 'image') ? true : false;
+            ctx.logger.info('FileService.getList || returnObj= %j', returnObj);
 
             returnData.push(returnObj);
         }
