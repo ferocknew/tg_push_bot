@@ -9,21 +9,21 @@
       }
     }
   ?>
-<?php
-function file_ico($item){
-  $ext = strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));
-  if(in_array($ext,['bmp','jpg','jpeg','png','gif','webp'])){
-  	return "image";
-  }
-  if(in_array($ext,['mp4','mkv','webm','avi','mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'mkv', 'asf', 'flv', 'm3u8'])){
-  	return "ondemand_video";
-  }
-  if(in_array($ext,['ogg','mp3','wav','flac','aac','m4a','ape'])){
-  	return "audiotrack";
-  }
-  return "insert_drive_file";
-}
-?>
+<!--<?php-->
+<!--function file_ico($item){-->
+<!--  $ext = strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));-->
+<!--  if(in_array($ext,['bmp','jpg','jpeg','png','gif','webp'])){-->
+<!--  	return "image";-->
+<!--  }-->
+<!--  if(in_array($ext,['mp4','mkv','webm','avi','mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'mkv', 'asf', 'flv', 'm3u8'])){-->
+<!--  	return "ondemand_video";-->
+<!--  }-->
+<!--  if(in_array($ext,['ogg','mp3','wav','flac','aac','m4a','ape'])){-->
+<!--  	return "audiotrack";-->
+<!--  }-->
+<!--  return "insert_drive_file";-->
+<!--}-->
+<!--?>-->
 
 <!--<?php view::begin('content');?>-->
 
@@ -104,7 +104,7 @@ function file_ico($item){
                 {% for item in items %}
 <!--                <?php foreach((array)$items as $item):?>-->
 <!--                <?php if(!empty($item['folder'])):?>-->
-                {% if item.folder == true %}
+                {% if item.folder %}
                 <li class="mdui-list-item mdui-ripple" data-sort data-sort-name="<?php e($item['name']);?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
                     data-sort-size="<?php echo $item['size'];?>" style="padding-right:36px;">
@@ -119,25 +119,33 @@ function file_ico($item){
                 </li>
                 {% else %}
                 <li class="mdui-list-item file mdui-ripple" data-sort data-sort-name="{{ item.name }}"
-                    data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
-                    data-sort-size="<?php echo $item['size'];?>">
-                    <a <?php echo file_ico($item)=="image"?'class="glightbox"':"";echo file_ico($item)=="ondemand_video"?'class="iframe"':"";echo file_ico($item)=="audiotrack"?'class="audio"':"";echo file_ico($item)=="insert_drive_file"?'class="dl"':""?>
-                    data-name="<?php e($item['name']);?>"
-                    data-readypreview="<?php echo strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));?>"
+                    data-sort-date="{{ item.lastModifiedDateTime }}"
+                    data-sort-size="{{ item.size }}">
+                    <a {% if item.ico == "image" %}
+                    class="glightbox"
+                       {% elseif item.ico == "ondemand_video" %}
+                    class="iframe"
+                       {% elseif item.ico == "audiotrack" %}
+                    class="audio"
+                       {% elseif item.ico == "insert_drive_file" %}
+                    class="dl"
+                        {% endif %}
+                    data-name="{{ item.name }}"
+                    data-readypreview="{{ item.extname }}"
                     href="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']);?>" target="_blank">
-                    <?php if(isImage($item['name']) and $_COOKIE["image_mode"] == "1"):?>
-                    <img class="mdui-img-fluid"
-                         src="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']); ?>">
-                    <?php else:?>
+<!--                    <?php if(isImage($item['name']) and $_COOKIE["image_mode"] == "1"):?>-->
+<!--                    <img class="mdui-img-fluid"-->
+<!--                         src="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']); ?>">-->
+<!--                    <?php else:?>-->
                     <div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
                         <i class="mdui-icon material-icons"><?php echo file_ico($item);?></i>
-                        <span><?php e($item['name']);?></span>
+                        <span>{{ item.name }}</span>
                     </div>
                     <div class="mdui-col-sm-3 mdui-text-right"><?php echo date("Y-m-d H:i:s", $item['lastModifiedDateTime']);?></div>
                     <div class="mdui-col-sm-2 mdui-text-right"><?php echo onedrive::human_filesize($item['size']);?>
 
                     </div>
-                    <?php endif;?>
+<!--                    <?php endif;?>-->
                     </a>
 
                     <div class="forcedownload ">

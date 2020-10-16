@@ -39,7 +39,8 @@ class FileService extends Service {
             returnObj['lastModifiedDateTime'] = moment(fsInfo['mtime']).format("YYYY-MM-DD HH:mm:ss");
             returnObj['size'] = fsInfo.size;
             if (fileFlag) returnObj['folder'] = false;
-            returnObj['extname'] = path.extname(item);
+            returnObj['extname'] = path.extname(item).toLowerCase();
+            returnObj['ico'] = await this.getFileType(returnObj['extname']);
 
             returnData.push(returnObj);
         }
@@ -48,17 +49,40 @@ class FileService extends Service {
         return returnData;
     }
 
-    async getFileType(fileName) {
+    async getFileType(extname) {
+        let imgArray = ['bmp', 'jpg', 'jpeg', 'png', 'gif', 'webp'];
+        let videoArray = ['mp4', 'mkv', 'webm', 'avi', 'mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'mkv', 'asf', 'flv', 'm3u8'];
+        let muiscArray = ['ogg', 'mp3', 'wav', 'flac', 'aac', 'm4a', 'ape'];
+
+        let returnStr = "";
+        switch (true) {
+            case (imgArray.indexOf(extname) != -1):
+                returnStr = "image";
+                break;
+            case (videoArray.indexOf(extname) != -1):
+                returnStr = "ondemand_video";
+                break;
+            case (muiscArray.indexOf(extname) != -1):
+                returnStr = "audiotrack";
+                break;
+            default:
+                returnStr = "insert_drive_file";
+                break
+        }
+
+        return returnStr;
+        // if (imgArray.indexOf(extname) != -1) return "image";
+
         /*
         function file_ico($item){
   $ext = strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));
-  if(in_array($ext,['bmp','jpg','jpeg','png','gif','webp'])){
+  if(in_array($ext,)){
   	return "image";
   }
-  if(in_array($ext,['mp4','mkv','webm','avi','mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'mkv', 'asf', 'flv', 'm3u8'])){
+  if(in_array($ext,)){
   	return "ondemand_video";
   }
-  if(in_array($ext,['ogg','mp3','wav','flac','aac','m4a','ape'])){
+  if(in_array($ext,)){
   	return "audiotrack";
   }
   return "insert_drive_file";
