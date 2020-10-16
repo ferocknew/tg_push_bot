@@ -103,8 +103,8 @@ function file_ico($item){
                 {% endif %}
                 {% for item in items %}
 <!--                <?php foreach((array)$items as $item):?>-->
-                <?php if(!empty($item['folder'])):?>
-
+<!--                <?php if(!empty($item['folder'])):?>-->
+                {% if item.folder == true %}
                 <li class="mdui-list-item mdui-ripple" data-sort data-sort-name="<?php e($item['name']);?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
                     data-sort-size="<?php echo $item['size'];?>" style="padding-right:36px;">
@@ -117,7 +117,7 @@ function file_ico($item){
                         <div class="mdui-col-sm-2 mdui-text-right"><?php echo onedrive::human_filesize($item['size']);?></div>
                     </a>
                 </li>
-                <?php else:?>
+                {% else %}
                 <li class="mdui-list-item file mdui-ripple" data-sort data-sort-name="{{ item.name }}"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
                     data-sort-size="<?php echo $item['size'];?>">
@@ -149,7 +149,7 @@ function file_ico($item){
 
 
                 </li>
-                <?php endif;?>
+                {% endif %}
                 {% endfor %}
 
                 <?php if($totalpage > 1 ):?>
