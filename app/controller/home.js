@@ -44,6 +44,7 @@ class HomeController extends Controller {
         ctx.logger.info('HomeController.inlineQuery || b = %j', b);
         let entities = messageObj.entities || null;
         let photoObj = messageObj.photo || null;
+        let documentObj = messageObj.document || null;
 
         // 处理bot 命令
         if (!Object.is(entities, null)) {
@@ -64,6 +65,12 @@ class HomeController extends Controller {
         // 处理发送图片
         if (!Object.is(photoObj, null)) {
             let res = await ctx.service.tgbot.ipfsSave(messageObj);
+            ctx.body = '';
+            return;
+        }
+
+        if (!Object.is(documentObj, null)) {
+            let res = await ctx.service.tgbot.ipfsSave(messageObj, true);
             ctx.body = '';
             return;
         }

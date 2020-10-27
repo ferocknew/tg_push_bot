@@ -113,7 +113,7 @@ class TgbotService extends Service {
      * ipfs 保存
      * @returns {Promise<boolean>}
      */
-    async ipfsSave(messageObj) {
+    async ipfsSave(messageObj, isDocument = false) {
         const {ctx, app} = this;
         let msgString = "";
 
@@ -131,6 +131,9 @@ class TgbotService extends Service {
         let photoInfo = messageObj.photo;
         let fileNum = photoInfo.length;
         let fileId = photoInfo[fileNum - 1].file_id;
+
+        if (isDocument) fileId = messageObj.document.file_id;
+
         let token = app.config.bot.token;
         let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
 
