@@ -5,7 +5,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const ipfsClient = require('ipfs-http-client');
-const uniqid = require('uniqid');
+const moment = require('moment');
 const {globSource} = ipfsClient;
 
 class IpfsService extends Service {
@@ -23,7 +23,7 @@ class IpfsService extends Service {
 
         let extname = path.extname(url);
         // let fileName = uniqid();
-        let fileName = new Date().getTime() + "-" + _.random(0, 9);
+        let fileName = moment().format('YYMMDDHHmmss-SSS') + "-" + _.random(0, 9);
         let saveDirPath = `/tmp/${fileName}_1`;
         let saveFilePath = `${saveDirPath}/${fileName}${extname}`;
 
