@@ -12,7 +12,7 @@ class IpfsService extends Service {
     constructor(ctx) {
         super(ctx);
         this.retryNum = 10;
-        this.retryTimeout = 1500;
+        this.retryTimeout = 10000;
         this.curlTimeout = 30000;
         this.ipfs = null;
     }
