@@ -128,11 +128,14 @@ class TgbotService extends Service {
         let ipfsFlag = res['ipfs_flag'];
         if (ipfsFlag != 1) return;
 
-        let photoInfo = messageObj.photo;
-        let fileNum = photoInfo.length;
-        let fileId = photoInfo[fileNum - 1].file_id;
-
-        if (isDocument) fileId = messageObj.document.file_id;
+        let fileId = "";
+        if (isDocument) {
+            fileId = messageObj.document.file_id;
+        } else {
+            let photoInfo = messageObj.photo;
+            let fileNum = photoInfo.length;
+            fileId = photoInfo[fileNum - 1].file_id;
+        }
 
         let token = app.config.bot.token;
         let url = `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`;
